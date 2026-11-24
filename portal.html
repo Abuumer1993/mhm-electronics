@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ur">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a1f44">
+<link rel="icon" href="logo-192.png">
+<link rel="apple-touch-icon" href="logo-192.png">
+<title>MHM Electronics</title>
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<script src="common.js"></script>
+<style> body { padding-bottom: 30px; } </style>
+</head>
+<body>
+
+<!-- ============ LOGIN / REQUEST ============ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <img class="logo-big" src="logo.png" alt="MHM">
+    <h1>MHM <span>ELECTRONICS</span></h1>
+    <div class="tag">INSTALLMENT &amp; EASY PAYMENT</div>
+    <div class="subtabs" style="justify-content:center">
+      <button id="tLogin" class="active" onclick="tab('login')">لاگ ان</button>
+      <button id="tReq" onclick="tab('req')">نئی درخواست</button>
+    </div>
+
+    <div id="boxLogin">
+      <label>موبائل نمبر</label><input id="lMobile" type="tel" inputmode="numeric" placeholder="03001234567">
+      <label>PIN (4 ہندسے)</label><input id="lPin" type="password" inputmode="numeric" maxlength="4" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="btn gold block" onclick="doLogin()">لاگ ان کریں</button>
+    </div>
+
+    <div id="boxReq" class="hidden">
+      <label>موبائل نمبر (جو دکان پر درج ہے)</label><input id="rMobile" type="tel" inputmode="numeric" placeholder="03001234567">
+      <label>نیا PIN بنائیں (4 ہندسے)</label><input id="rPin" type="password" inputmode="numeric" maxlength="4">
+      <label>PIN دوبارہ لکھیں</label><input id="rPin2" type="password" inputmode="numeric" maxlength="4">
+      <label>شرائط و ضوابط</label>
+      <div class="terms" id="termsBox"></div>
+      <label style="display:flex;gap:8px;align-items:center;color:#fff;margin-top:10px">
+        <input type="checkbox" id="rAgree" style="width:22px;height:22px">
+        <span>میں نے تمام شرائط پڑھ لی ہیں اور میں ان سے متفق ہوں</span>
+      </label>
+      <button class="btn gold block" onclick="doRequest()">درخواست بھیجیں</button>
+    </div>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="brand-wrap"><img src="logo-192.png" alt=""><div class="brand"><b>MHM <span>ELECTRONICS</span></b><small>INSTALLMENT &amp; EASY PAYMENT</small></div></div>
+  <button class="icon-btn" onclick="logoutC()">لاگ آؤٹ</button>
+</header>
+
+<main>
+  <div class="hero">
+    <img class="hero-logo" src="logo-192.png" alt="">
+    <div class="sub">خوش آمدید</div>
+    <div style="font-size:20px;font-weight:700" id="cName"></div>
+    <div class="sub" id="cSub"></div>
+  </div>
+  <div id="notice"></div>
+  <div id="deals"></div>
+</main>
+
+<div id="modalHost"></div>
+<div id="toast"></div>
+<div id="loading"><div class="spinner"></div></div>
+
+<script>
+var MOB = '', PIN = '', DATA = null;
+$('termsBox').innerHTML = termsHtml();
+
+function tab(t) {
+  $('boxLogin').classList.toggle('hidden', t !== 'login');
+  $('boxReq').classList.toggle('hidden', t !== 'req');
+  $('tLogin').classList.toggle('active', t === 'login');
+  $('tReq').classList.toggle('active', t === 'req');
+}
+
+function doRequest() {
+  var m = $('rMobile').value.trim(), p = $('rPin').value.trim();
+  if (!/^\d{4}$/.test(p)) { toast('PIN صرف 4 ہندسوں کا ہو', true); return; }
+  if (p !== $('rPin2').value.trim()) { toast('دونوں PIN ایک جیسے نہیں', true); return; }
+  if (!$('rAgree').checked) { toast('شرائط سے اتفاق کا خانہ ٹک کریں', true); return; }
+  api('requestLogin', [m, p, true]).then(function (r) {
+    var msg = '*' + r.shop.shopName + '*\nالسلام علیکم، میں نے ایپ میں لاگ ان کی درخواست دی ہے اور شرائط قبول کر لی ہیں۔\nموبائل: ' + m + '\nبراہ کرم منظور فرما دیں۔';
+    modal('<h3 style="color:var(--green)">✅ درخواست بھیج دی گئی</h3><p>دکاندار کی منظوری کے بعد آپ اپنے موبائل نمبر اور PIN سے لاگ ان کر سکیں گے۔</p>' +
+      (r.shop.shopMobile ? '<a class="btn wa block" target="_blank" href="' + waLink(r.shop.shopMobile, msg) + '">📲 دکاندار کو اطلاع دیں</a>' : '') +
+      '<button class="btn light block" onclick="closeModal();tab(\'login\')">ٹھیک ہے</button>');
+    $('lMobile').value = m;
+  }).catch(fail);
+}
+
+function doLogin() {
+  MOB = $('lMobile').value.trim(); PIN = $('lPin').value.trim();
+  if (!MOB || !PIN) { toast('موبائل نمبر اور PIN لکھیں', true); return; }
+  refresh();
+}
+
+function logoutC() {
+  store('mhm_c', null); MOB = ''; PIN = '';
+  $('lPin').value = '';
+  $('loginScreen').classList.remove('hidden');
+}
+
+function refresh() {
+  api('customerData', [MOB, PIN]).then(function (d) {
+    DATA = d;
+    store('mhm_c', MOB + '|' + PIN);
+    $('loginScreen').classList.add('hidden');
+    $('cName').textContent = d.customer.name;
+    $('cSub').textContent = 'ولد ' + d.customer.fatherName;
+    render();
+  }).catch(function (e) {
+    store('mhm_c', null);
+    $('loginScreen').classList.remove('hidden');
+    fail(e);
+  });
+}
+
+function render() {
+  var d = DATA;
+  if (!d.deals.length) { $('deals').innerHTML = '<div class="card muted">ابھی کوئی سودا درج نہیں۔</div>'; return; }
+  $('deals').innerHTML = d.deals.map(function (dl, i) {
+    var pct = dl.totalPrice ? Math.min(100, Math.round(dl.totalPaid * 100 / dl.totalPrice)) : 0;
+    var h = '';
+
+    // Delivery acknowledgment
+    if (!dl.ackCustomer) {
+      h += '<div class="card ack-box"><h3>📦 پراڈکٹ وصولی کا اقرار</h3><p>' + esc(ackText(d.customer, dl)) + '</p>' +
+        '<button class="btn green block" onclick="ackDelivery(\'' + dl.accountNo + '\')">✅ میں اقرار کرتا ہوں</button></div>';
+    }
+
+    // Pending confirmations
+    dl.payments.filter(function (p) { return p.status === 'Shop Received'; }).forEach(function (p) {
+      h += '<div class="card highlight"><h3>🔔 دکاندار نے آپ کی قسط وصول کر لی ہے</h3>' +
+        '<div class="row"><span>رسید نمبر</span><span class="num">' + esc(p.receiptNo) + '</span></div>' +
+        '<div class="row"><span>رقم</span><b class="num">' + money(p.amount) + '</b></div>' +
+        '<div class="row"><span>تاریخ</span><span class="num">' + esc(p.shopConfirmedAt || p.date) + '</span></div>' +
+        '<p class="muted">اگر یہ درست ہے تو تصدیق کریں:</p>' +
+        '<button class="btn green block" onclick="confirmReceipt(\'' + p.receiptNo + '\')">✅ میں تصدیق کرتا ہوں</button></div>';
+    });
+
+    // Summary
+    h += '<div class="card deal-card"><div class="row"><b class="num">' + esc(dl.accountNo) + '</b>' + badge(dl.status) + '</div>' +
+      '<div><b>' + esc(dl.itemType) + ':</b> ' + esc(dl.company + ' ' + dl.model + ' ' + dl.color) + ' <span class="muted">' + esc(dl.specs) + '</span></div>' +
+      (dl.serial ? '<div class="muted">IMEI/سیریل: <span class="num">' + esc(dl.serial) + '</span></div>' : '') +
+      '<div class="progress"><div style="width:' + pct + '%"></div></div>' +
+      '<div class="muted" style="text-align:center">' + pct + '% ادا — <b>' + dl.paidCount + '</b> قسطیں ادا، <b>' + dl.remainingCount + '</b> باقی</div>' +
+      '<div class="row"><span>کل قیمت</span><span class="num">' + money(dl.totalPrice) + '</span></div>' +
+      '<div class="row"><span>ایڈوانس</span><span class="num">' + money(dl.advance) + '</span></div>' +
+      '<div class="row"><span>ماہانہ قسط</span><span class="num">' + money(dl.monthly) + ' × ' + dl.installments + '</span></div>' +
+      '<div class="row"><span>کل ادا شدہ</span><b class="num" style="color:var(--green)">' + money(dl.totalPaid) + '</b></div>' +
+      '<div class="row"><span>بقایا</span><b class="num" style="color:var(--red)">' + money(dl.balance) + '</b></div>' +
+      (dl.ackCustomer ? '<div class="muted">📦 وصولی کا اقرار: <span class="num">' + esc(dl.ackCustomer) + '</span></div>' : '') +
+      '</div>';
+
+    // Submit proof
+    if (dl.status !== 'Completed') {
+      h += '<div class="card"><h3>📤 قسط کا پروف بھیجیں</h3><p class="muted">JazzCash، Easypaisa یا بینک سے رقم بھیج کر اسکرین شاٹ یہاں لگائیں</p>' +
+        '<label>رقم</label><input id="amt' + i + '" type="number" inputmode="numeric" value="' + Math.min(dl.monthly, dl.balance) + '">' +
+        '<label>طریقہ</label><select id="mth' + i + '"><option>JazzCash</option><option>Easypaisa</option><option>بینک</option><option>دیگر</option></select>' +
+        '<label>پروف کی تصویر</label><input id="prf' + i + '" type="file" accept="image/*">' +
+        '<button class="btn gold block" onclick="sendProof(' + i + ')">پروف جمع کرائیں</button></div>';
+    }
+
+    // Schedule
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    h += '<div class="card"><h3>📅 قسطوں کا شیڈول</h3><div class="table-wrap"><table><tr><th>#</th><th>تاریخ</th><th>قسط</th><th>ادا</th><th></th></tr>' +
+      dl.schedule.map(function (s) {
+        var p = s.dueDate.split('-'), due = new Date(Number(p[2]), Number(p[1]) - 1, Number(p[0]));
+        var st = (s.remaining > 0 && due < today) ? 'Overdue' : s.status;
+        return '<tr><td class="num">' + s.no + '</td><td class="num">' + esc(s.dueDate) + '</td><td class="num">' + money(s.dueAmount) + '</td><td class="num">' + money(s.paid) + '</td><td>' + badge(st) + '</td></tr>';
+      }).join('') + '</table></div></div>';
+
+    // History
+    h += '<div class="card"><h3>🧾 ادائیگیوں کی تاریخ</h3>' + (dl.payments.length ? dl.payments.map(function (p) {
+      var ok = p.status === 'Shop Received' || p.status === 'Confirmed';
+      return '<div class="row"><span><span class="num">' + esc(p.receiptNo) + '</span> ' + badge(p.status) + '<br><span class="muted num">' + esc(p.date) + '</span></span>' +
+        '<span style="text-align:left"><b class="num">' + money(p.amount) + '</b>' +
+        (ok ? '<br><button class="btn light sm" onclick="myReceipt(' + i + ',\'' + p.receiptNo + '\')">🖼️ رسید</button>' : '') + '</span></div>';
+    }).join('') : '<p class="muted">ابھی کوئی ادائیگی نہیں</p>') + '</div>';
+
+    h += '<div class="card"><h3>📜 شرائط و ضوابط</h3>' + termsHtml() + '</div>';
+    return h;
+  }).join('');
+}
+
+function ackDelivery(acc) {
+  if (!confirm('کیا آپ اقرار کرتے ہیں کہ پراڈکٹ آپ کو بغیر کسی نقص کے مل گئی ہے؟')) return;
+  api('customerAckDelivery', [MOB, PIN, acc]).then(function () { toast('شکریہ! اقرار محفوظ ہو گیا ✅'); refresh(); }).catch(fail);
+}
+
+function confirmReceipt(no) {
+  if (!confirm('کیا آپ تصدیق کرتے ہیں کہ رسید ' + no + ' کی رقم آپ نے ادا کی اور دکاندار نے وصول کر لی؟')) return;
+  api('customerConfirm', [MOB, PIN, no]).then(function () { toast('قسط دونوں طرف سے کنفرم ہو گئی ✅'); refresh(); }).catch(fail);
+}
+
+function sendProof(i) {
+  var dl = DATA.deals[i], amt = Number($('amt' + i).value);
+  if (!(amt > 0)) { toast('رقم لکھیں', true); return; }
+  if (!$('prf' + i).files.length) { toast('پروف کی تصویر لگائیں', true); return; }
+  busy(true);
+  readImage($('prf' + i)).then(function (proof) {
+    return api('submitPayment', [MOB, PIN, dl.accountNo, { amount: amt, method: $('mth' + i).value, proof: proof }]);
+  }).then(function (r) {
+    var msg = '*' + r.shop.shopName + '*\nالسلام علیکم، میں نے قسط کا پروف جمع کرا دیا ہے۔\nنام: ' + DATA.customer.name + '\nاکاؤنٹ نمبر: ' + dl.accountNo +
+      '\nرسید نمبر: ' + r.receiptNo + '\nرقم: ' + money(amt) + '\nبراہ کرم تصدیق کر دیں۔';
+    $('notice').innerHTML = '<div class="card highlight"><p>✅ پروف جمع ہو گیا (رسید <span class="num">' + esc(r.receiptNo) + '</span>)۔ دکاندار کی تصدیق کا انتظار کریں۔</p>' +
+      (r.shop.shopMobile ? '<a class="btn wa block" target="_blank" href="' + waLink(r.shop.shopMobile, msg) + '">📲 دکاندار کو اطلاع دیں</a>' : '') + '</div>';
+    refresh();
+    window.scrollTo(0, 0);
+  }).catch(fail);
+}
+
+function myReceipt(i, no) {
+  var dl = DATA.deals[i];
+  var p = dl.payments.filter(function (x) { return x.receiptNo === no; })[0];
+  var info = { payment: p, deal: dl, customer: DATA.customer, shop: DATA.shop };
+  window._info = info;
+  modal('<div style="transform:scale(.82);transform-origin:top center;margin-bottom:-90px">' + receiptHtml(info) + '</div>' +
+    '<button class="btn gold block" onclick="shareReceipt(window._info)">🖼️ رسید کی تصویر محفوظ / شیئر کریں</button>' +
+    '<button class="btn light block" onclick="closeModal()">بند کریں</button>');
+}
+
+(function () {
+  var s = load('mhm_c');
+  if (s) { var p = s.split('|'); MOB = p[0]; PIN = p[1]; $('lMobile').value = MOB; refresh(); }
+})();
+</script>
+</body>
+</html>
