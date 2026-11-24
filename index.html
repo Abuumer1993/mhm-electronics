@@ -13,7 +13,7 @@
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script src="common.js"></script>
 </head>
-<body>
+<body class="admin">
 
 <!-- ============ LOGIN ============ -->
 <div id="loginScreen" class="login-screen">
@@ -28,8 +28,9 @@
 </div>
 
 <header class="topbar">
-  <div class="brand-wrap"><img src="logo-192.png" alt=""><div class="brand"><b>MHM <span>ELECTRONICS</span></b><small>ADMIN PANEL</small></div></div>
-  <button class="icon-btn" onclick="refreshPage()">🔄 تازہ کریں</button>
+  <div class="topbar-start"><button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div class="brand-wrap"><img src="logo-192.png" alt=""><div class="brand"><b>MHM <span>ELECTRONICS</span></b><small>ADMIN PANEL</small></div></div></div>
+  <button class="icon-btn" onclick="refreshPage()" title="تازہ کریں" style="font-size:18px">🔄</button>
 </header>
 
 <main>
@@ -211,13 +212,19 @@
 
 <button class="fab hidden" id="fab" onclick="openCustForm()">+</button>
 
-<nav class="bottom-nav" id="nav">
-  <button data-p="home" onclick="go('home')"><i>🏠</i>ہوم</button>
-  <button data-p="pays" onclick="go('pays')"><i>💰</i>قسطیں<span class="nav-badge hidden" id="nbPays"></span></button>
-  <button data-p="custs" onclick="go('custs')"><i>👥</i>گاہک</button>
-  <button data-p="logins" onclick="go('logins')"><i>🔐</i>لاگ ان<span class="nav-badge hidden" id="nbLogins"></span></button>
-  <button data-p="settings" onclick="go('settings')"><i>⚙️</i>سیٹنگ</button>
-</nav>
+<div class="overlay" id="overlay" onclick="toggleMenu(false)"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="side-head"><img src="logo.png" alt="MHM"><b>MHM <span>ELECTRONICS</span></b></div>
+  <nav id="nav">
+    <button data-p="home" onclick="go('home')"><i>🏠</i>ڈیش بورڈ</button>
+    <button data-p="pays" onclick="go('pays')"><i>💰</i>قسطیں اور تصدیق<span class="nav-badge hidden" id="nbPays"></span></button>
+    <button data-p="custs" onclick="go('custs')"><i>👥</i>گاہک</button>
+    <button data-p="newCust" onclick="openCustForm()"><i>➕</i>نیا گاہک</button>
+    <button data-p="logins" onclick="go('logins')"><i>🔐</i>گاہکوں کے لاگ ان<span class="nav-badge hidden" id="nbLogins"></span></button>
+    <button data-p="settings" onclick="go('settings')"><i>⚙️</i>سیٹنگ</button>
+  </nav>
+  <div class="side-foot"><button class="btn red block" onclick="logout()">🚪 لاگ آؤٹ</button></div>
+</aside>
 
 <div id="modalHost"></div>
 <div id="toast"></div>
@@ -244,11 +251,18 @@ function adminFail(e) { if (String(e.message) === 'WRONG_PASSWORD') logout(); fa
 function show(p) {
   PAGES.forEach(function (x) { $('p-' + x).classList.add('hidden'); });
   $('p-' + p).classList.remove('hidden');
-  var nav = { cust: 'custs', custForm: 'custs', dealForm: 'custs' }[p] || p;
+  var nav = { cust: 'custs', custForm: (editId ? 'custs' : 'newCust'), dealForm: 'custs' }[p] || p;
+  toggleMenu(false);
   var b = $('nav').querySelectorAll('button');
   for (var i = 0; i < b.length; i++) b[i].classList.toggle('active', b[i].getAttribute('data-p') === nav);
   $('fab').classList.toggle('hidden', p !== 'custs');
   window.scrollTo(0, 0);
+}
+function toggleMenu(open) {
+  var sb = $('sidebar');
+  if (open === undefined) open = !sb.classList.contains('open');
+  sb.classList.toggle('open', open);
+  $('overlay').classList.toggle('show', open);
 }
 function go(p, noPush) {
   show(p);
