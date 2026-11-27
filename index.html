@@ -7,73 +7,96 @@
 <link rel="icon" href="logo-192.png">
 <link rel="apple-touch-icon" href="logo-192.png">
 <title>MHM Electronics - Admin</title>
-<link rel="stylesheet" href="style.css">
-<script src="config.js"></script>
+<link rel="stylesheet" href="style.css?v=7">
+<script src="config.js?v=7"></script>
+<script src="i18n.js?v=7"></script>
 <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-<script src="common.js"></script>
+<script src="common.js?v=7"></script>
 </head>
 <body class="admin">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><linearGradient id="goldG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E27A"/><stop offset=".45" stop-color="#D4AF37"/><stop offset="1" stop-color="#AA7C11"/></linearGradient></defs>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5.5v-6h-5v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-pay" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M16 15.5h5v-4h-5a2 2 0 0 0 0 4z"/><path d="M5 6l10-3 1.5 3"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.6c2.6.2 4.4 1.9 5 4.9"/></symbol>
+  <symbol id="i-useradd" viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 20.5c.9-3.8 3.6-6 7-6 2 0 3.7.7 5 2"/><path d="M19 14v6M16 17h6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h11"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 16l-4-4 4-4M6 12h10"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11v3"/><circle cx="16" cy="13.5" r="1.3"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 20V11M10.5 20V5M16 20v-7M2.5 20.5h19"/><path d="M4 8l6-4 5 5 5-4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></symbol>
+</svg>
 
 <!-- ============ LOGIN ============ -->
 <div id="loginScreen" class="login-screen">
   <div class="login-card">
+    <div id="lsLogin"></div>
     <img class="logo-big" src="logo.png" alt="MHM">
     <h1>MHM <span>ELECTRONICS</span></h1>
     <div class="tag">INSTALLMENT &amp; EASY PAYMENT</div>
-    <p style="margin:4px 0">ایڈمن پینل</p>
-    <input type="password" id="pwd" placeholder="پاس ورڈ" onkeydown="if(event.key==='Enter')login()">
-    <button class="btn gold block" onclick="login()">داخل ہوں</button>
+    <p style="margin:4px 0" data-i18n="app_admin"></p>
+    <input type="password" id="pwd" data-i18n-ph="password" onkeydown="if(event.key==='Enter')login()">
+    <button class="btn gold block" onclick="login()" data-i18n="enter"></button>
   </div>
 </div>
 
 <header class="topbar">
-  <div class="topbar-start"><button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
-  <div class="brand-wrap"><img src="logo-192.png" alt=""><div class="brand"><b>MHM <span>ELECTRONICS</span></b><small>ADMIN PANEL</small></div></div></div>
-  <button class="icon-btn" onclick="refreshPage()" title="تازہ کریں" style="font-size:18px">🔄</button>
+  <div class="topbar-start">
+    <div class="brand-wrap"><img src="logo-192.png" alt=""><div class="brand"><b>MHM <span>ELECTRONICS</span></b><small>ADMIN PANEL</small></div></div>
+  </div>
+  <div class="topbar-end">
+    <button class="sq-btn" onclick="refreshPage()" aria-label="Refresh"><svg class="ico"><use href="#i-refresh"/></svg></button>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+  </div>
 </header>
 
 <main>
   <!-- HOME -->
   <section id="p-home" class="page hidden">
-    <div class="hero">
-    <img class="hero-logo" src="logo-192.png" alt="">
-      <div class="sub">آج کی وصولی</div>
+    <div class="frame-shadow"><div class="hero">
+      <img class="hero-logo" src="logo-192.png" alt="">
+      <div class="sub" data-i18n="today_coll"></div>
       <div class="big" id="hToday">Rs 0</div>
-      <div class="sub">اس مہینے: <span class="num" id="hMonth">Rs 0</span></div>
-    </div>
+      <div class="sub"><span data-i18n="this_month"></span>: <span class="num" id="hMonth">Rs 0</span></div>
+    </div></div>
     <div id="alerts"></div>
     <div class="stats">
-      <div class="stat y"><span>کل بقایا (مارکیٹ میں)</span><b id="hBal">0</b></div>
-      <div class="stat"><span>جاری سودے</span><b id="hActive">0</b></div>
-      <div class="stat g"><span>اس مہینے کا منافع</span><b id="hProfit">0</b></div>
-      <div class="stat o"><span>لیٹ اکاؤنٹس</span><b id="hLate">0</b></div>
+      <div class="stat-wrap"><div class="stat y"><div class="stat-ico"><svg class="ico"><use href="#i-wallet"/></svg></div><div class="stat-txt"><span data-i18n="total_bal"></span><b id="hBal">0</b></div></div></div>
+      <div class="stat-wrap"><div class="stat b"><div class="stat-ico"><svg class="ico"><use href="#i-box"/></svg></div><div class="stat-txt"><span data-i18n="active_deals"></span><b id="hActive">0</b></div></div></div>
+      <div class="stat-wrap"><div class="stat g"><div class="stat-ico"><svg class="ico"><use href="#i-chart"/></svg></div><div class="stat-txt"><span data-i18n="month_profit"></span><b id="hProfit">0</b></div></div></div>
+      <div class="stat-wrap"><div class="stat o"><div class="stat-ico"><svg class="ico"><use href="#i-clock"/></svg></div><div class="stat-txt"><span data-i18n="late_accounts"></span><b id="hLate">0</b></div></div></div>
     </div>
     <div class="card">
-      <h3>⚠️ لیٹ قسطیں</h3>
+      <h3 data-i18n="late_inst"></h3>
       <div id="overdueList" class="muted">...</div>
     </div>
   </section>
 
   <!-- PAYMENTS -->
   <section id="p-pays" class="page hidden">
-    <h2 class="title">قسطیں اور تصدیق</h2>
+    <h2 class="title" data-i18n="m_pays"></h2>
     <div class="subtabs" id="paySubtabs">
-      <button data-s="Pending Shop" onclick="payFilter('Pending Shop')">🟡 پروف آئے</button>
-      <button data-s="Shop Received" onclick="payFilter('Shop Received')">🔵 گاہک کی تصدیق باقی</button>
-      <button data-s="Confirmed" onclick="payFilter('Confirmed')">🟢 کنفرم</button>
-      <button data-s="Rejected" onclick="payFilter('Rejected')">🔴 مسترد</button>
-      <button data-s="" onclick="payFilter('')">سب</button>
+      <button data-s="Pending Shop" onclick="payFilter('Pending Shop')"><i class="dot y"></i><span data-i18n="tab_proofs"></span></button>
+      <button data-s="Shop Received" onclick="payFilter('Shop Received')"><i class="dot b"></i><span data-i18n="tab_custpending"></span></button>
+      <button data-s="Confirmed" onclick="payFilter('Confirmed')"><i class="dot g"></i><span data-i18n="tab_confirmed"></span></button>
+      <button data-s="Rejected" onclick="payFilter('Rejected')"><i class="dot r"></i><span data-i18n="tab_rejected"></span></button>
+      <button data-s="" onclick="payFilter('')"><i class="dot k"></i><span data-i18n="all"></span></button>
     </div>
-    <button class="btn gold block" onclick="openPayForm('')">+ دکان پر قسط وصول کریں</button>
+    <button class="btn gold block" onclick="openPayForm('')" data-i18n="receive_at_shop"></button>
     <div id="payList"></div>
   </section>
 
   <!-- CUSTOMERS -->
   <section id="p-custs" class="page hidden">
-    <h2 class="title">گاہک</h2>
+    <h2 class="title" data-i18n="m_custs"></h2>
     <div class="card">
-      <input id="q" placeholder="🔍 نام، موبائل، شناختی کارڈ، IMEI یا اکاؤنٹ نمبر" oninput="searchDelay()">
+      <input id="q" data-i18n-ph="search_ph" oninput="searchDelay()">
       <div id="custList"></div>
     </div>
   </section>
@@ -83,148 +106,155 @@
 
   <!-- CUSTOMER FORM -->
   <section id="p-custForm" class="page hidden">
-    <h2 class="title" id="custFormTitle">نیا گاہک</h2>
+    <h2 class="title" id="custFormTitle"></h2>
     <div class="card">
-      <div class="section-title">گاہک کا شناختی کارڈ</div>
+      <div class="section-title" data-i18n="cust_cnic_sec"></div>
       <div class="scan-box">
-        <label>📷 شناختی کارڈ (آگے) — تصویر لگاتے ہی نام، ولدیت اور نمبر خود بھر جائیں گے</label>
-        <input type="file" accept="image/*" capture="environment" id="f_cnicFront" onchange="scanInto(this,'cnicFront','c_')">
-        <label>📷 شناختی کارڈ (پیچھے) — پتہ خود بھر جائے گا</label>
-        <input type="file" accept="image/*" capture="environment" id="f_cnicBack" onchange="scanInto(this,'cnicBack','c_')">
-        <div class="hint">⚠️ اسکین کے بعد ایک نظر دیکھ کر ضرورت ہو تو درست کر لیں</div>
+        <label data-i18n="scan_cf"></label>
+        <input type="file" accept="image/*" id="f_cnicFront" onchange="scanInto(this,'cnicFront','c_')">
+        <label data-i18n="scan_cb"></label>
+        <input type="file" accept="image/*" id="f_cnicBack" onchange="scanInto(this,'cnicBack','c_')">
+        <div class="hint" data-i18n="scan_hint"></div>
       </div>
       <div class="grid2">
-        <div><label>نام *</label><input id="c_name"></div>
-        <div><label>والد کا نام</label><input id="c_fatherName"></div>
-        <div><label>شناختی کارڈ نمبر</label><input id="c_cnic" class="ltr" placeholder="35202-1234567-1"></div>
-        <div><label>موبائل نمبر (WhatsApp) *</label><input id="c_mobile" type="tel" placeholder="03001234567"></div>
+        <div><label><span data-i18n="name"></span> *</label><input id="c_name"></div>
+        <div><label data-i18n="father"></label><input id="c_fatherName"></div>
+        <div><label data-i18n="cnic_no"></label><input id="c_cnic" class="ltr" placeholder="35202-1234567-1"></div>
+        <div><label><span data-i18n="mobile_wa"></span> *</label><input id="c_mobile" type="tel" placeholder="03001234567"></div>
       </div>
-      <label>پتہ</label><textarea id="c_address" rows="2"></textarea>
-      <label>گاہک کی تصویر</label><input type="file" accept="image/*" id="f_photo">
+      <label data-i18n="address"></label><textarea id="c_address" rows="2"></textarea>
+      <label data-i18n="cust_photo"></label><input type="file" accept="image/*" id="f_photo">
 
-      <div class="section-title">ضامن</div>
+      <div class="section-title" data-i18n="guarantor"></div>
       <div class="scan-box">
-        <label>📷 ضامن کا شناختی کارڈ (آگے)</label>
-        <input type="file" accept="image/*" capture="environment" id="f_gCnicFront" onchange="scanInto(this,'cnicFront','g_')">
-        <label>📷 ضامن کا شناختی کارڈ (پیچھے)</label>
-        <input type="file" accept="image/*" capture="environment" id="f_gCnicBack" onchange="scanInto(this,'cnicBack','g_')">
+        <label data-i18n="scan_gcf"></label>
+        <input type="file" accept="image/*" id="f_gCnicFront" onchange="scanInto(this,'cnicFront','g_')">
+        <label data-i18n="scan_gcb"></label>
+        <input type="file" accept="image/*" id="f_gCnicBack" onchange="scanInto(this,'cnicBack','g_')">
       </div>
       <div class="grid2">
-        <div><label>ضامن کا نام</label><input id="g_name"></div>
-        <div><label>ضامن کا شناختی کارڈ</label><input id="g_cnic" class="ltr"></div>
-        <div><label>ضامن کا موبائل</label><input id="g_mobile" type="tel"></div>
-        <div><label>ضامن کا پتہ</label><input id="g_address"></div>
+        <div><label data-i18n="g_name"></label><input id="g_name"></div>
+        <div><label data-i18n="g_cnic_l"></label><input id="g_cnic" class="ltr"></div>
+        <div><label data-i18n="g_mobile"></label><input id="g_mobile" type="tel"></div>
+        <div><label data-i18n="g_address"></label><input id="g_address"></div>
       </div>
-      <label>نوٹ</label><textarea id="c_notes" rows="2"></textarea>
-      <button class="btn green block" onclick="saveCustomer()">💾 محفوظ کریں</button>
-      <button class="btn light block" onclick="history.back()">واپس</button>
+      <label data-i18n="notes"></label><textarea id="c_notes" rows="2"></textarea>
+      <button class="btn green block" onclick="saveCustomer()" data-i18n="save"></button>
+      <button class="btn light block" onclick="history.back()" data-i18n="back"></button>
     </div>
   </section>
 
   <!-- DEAL FORM -->
   <section id="p-dealForm" class="page hidden">
-    <h2 class="title">نیا سودا: <span id="dealCustName"></span></h2>
+    <h2 class="title"><span data-i18n="deal_title"></span> <span id="dealCustName"></span></h2>
     <div class="card">
-      <div class="section-title">پراڈکٹ</div>
+      <div class="section-title" data-i18n="product"></div>
       <div class="scan-box">
-        <button class="btn gold" onclick="scanBarcode()">▦ بارکوڈ سے IMEI اسکین</button>
-        <label>📷 ڈبے کے اسٹیکر کی تصویر — کمپنی، ماڈل، IMEI خود بھر جائیں گے</label>
-        <input type="file" accept="image/*" capture="environment" id="f_productLabel" onchange="scanProduct(this)">
+        <button class="btn gold" onclick="scanBarcode()" data-i18n="scan_barcode"></button>
+        <label data-i18n="scan_label"></label>
+        <input type="file" accept="image/*" id="f_productLabel" onchange="scanProduct(this)">
       </div>
       <div class="grid2">
-        <div><label>چیز کی قسم *</label>
-          <select id="d_itemType">
-            <option>موبائل</option><option>LED</option><option>فریج</option><option>واشنگ مشین</option><option>اے سی</option>
-            <option>مائیکرو ویو</option><option>موٹر سائیکل</option><option>لیپ ٹاپ</option><option>دیگر</option>
-          </select></div>
-        <div><label>کمپنی *</label><input id="d_company"></div>
-        <div><label>ماڈل *</label><input id="d_model"></div>
-        <div><label>رنگ</label><input id="d_color"></div>
-        <div><label>تفصیل (RAM / Storage / سائز)</label><input id="d_specs"></div>
-        <div><label>سیریل / IMEI</label><input id="d_serial" class="ltr"></div>
+        <div><label><span data-i18n="item_type"></span> *</label><select id="d_itemType"></select></div>
+        <div><label><span data-i18n="company"></span> *</label><input id="d_company"></div>
+        <div><label><span data-i18n="model"></span> *</label><input id="d_model"></div>
+        <div><label data-i18n="color"></label><input id="d_color"></div>
+        <div><label data-i18n="specs"></label><input id="d_specs"></div>
+        <div><label data-i18n="imei_serial"></label><input id="d_serial" class="ltr"></div>
       </div>
 
-      <div class="section-title">قیمت اور قسطیں</div>
+      <div class="section-title" data-i18n="price_sec"></div>
       <div class="grid2">
-        <div><label>خرید قیمت (صرف آپ کے لیے)</label><input id="d_costPrice" type="number" inputmode="numeric" oninput="calcDeal()"></div>
-        <div><label>نقد قیمت</label><input id="d_cashPrice" type="number" inputmode="numeric"></div>
-        <div><label>قسطوں پر کل قیمت *</label><input id="d_totalPrice" type="number" inputmode="numeric" oninput="calcDeal()"></div>
-        <div><label>ایڈوانس</label><input id="d_advance" type="number" inputmode="numeric" oninput="calcDeal()"></div>
-        <div><label>کتنی قسطیں (مہینے) *</label><input id="d_installments" type="number" inputmode="numeric" oninput="calcDeal()"></div>
-        <div><label>پہلی قسط کی تاریخ *</label><input id="d_firstDueDate" type="date"></div>
+        <div><label data-i18n="cost_price"></label><input id="d_costPrice" type="number" inputmode="numeric" oninput="calcDeal()"></div>
+        <div><label data-i18n="cash_price"></label><input id="d_cashPrice" type="number" inputmode="numeric"></div>
+        <div><label><span data-i18n="inst_price"></span> *</label><input id="d_totalPrice" type="number" inputmode="numeric" oninput="calcDeal()"></div>
+        <div><label data-i18n="advance"></label><input id="d_advance" type="number" inputmode="numeric" oninput="calcDeal()"></div>
+        <div><label><span data-i18n="num_inst"></span> *</label><input id="d_installments" type="number" inputmode="numeric" oninput="calcDeal()"></div>
+        <div><label><span data-i18n="first_due"></span> *</label><input id="d_firstDueDate" type="date"></div>
       </div>
-      <div class="card highlight" id="dealCalc" style="margin-top:10px">ماہانہ قسط: -</div>
+      <div class="card highlight" id="dealCalc" style="margin-top:10px">-</div>
 
-      <div class="section-title">سیکیورٹی چیک</div>
+      <div class="section-title" data-i18n="cheque_sec"></div>
       <div class="scan-box">
-        <label>📷 چیک کی تصویر — اکاؤنٹ نمبر، چیک نمبر اور نام خود بھر جائیں گے</label>
-        <input type="file" accept="image/*" capture="environment" id="f_cheque" onchange="scanCheque(this)">
+        <label data-i18n="scan_cheque"></label>
+        <input type="file" accept="image/*" id="f_cheque" onchange="scanCheque(this)">
       </div>
       <div class="grid2">
-        <div><label>بینک</label><input id="d_chequeBank"></div>
-        <div><label>اکاؤنٹ ہولڈر کا نام</label><input id="d_chequeHolder"></div>
-        <div><label>اکاؤنٹ نمبر</label><input id="d_chequeAccount" class="ltr"></div>
-        <div><label>چیک نمبر</label><input id="d_chequeNo" class="ltr"></div>
-        <div><label>چیک پر رقم</label><input id="d_chequeAmount" type="number" inputmode="numeric"></div>
+        <div><label data-i18n="bank"></label><input id="d_chequeBank"></div>
+        <div><label data-i18n="holder"></label><input id="d_chequeHolder"></div>
+        <div><label data-i18n="account_no"></label><input id="d_chequeAccount" class="ltr"></div>
+        <div><label data-i18n="cheque_no"></label><input id="d_chequeNo" class="ltr"></div>
+        <div><label data-i18n="cheque_amt"></label><input id="d_chequeAmount" type="number" inputmode="numeric"></div>
       </div>
 
-      <label>ڈیلیوری کی تصویر (گاہک چیز کے ساتھ)</label><input type="file" accept="image/*" id="f_delivery">
-      <label>نوٹ</label><textarea id="d_notes" rows="2"></textarea>
-      <button class="btn green block" onclick="saveDeal()">💾 سودا محفوظ کریں</button>
-      <button class="btn light block" onclick="history.back()">واپس</button>
+      <label data-i18n="delivery_photo"></label><input type="file" accept="image/*" id="f_delivery">
+      <label data-i18n="notes"></label><textarea id="d_notes" rows="2"></textarea>
+      <button class="btn green block" onclick="saveDeal()" data-i18n="save_deal"></button>
+      <button class="btn light block" onclick="history.back()" data-i18n="back"></button>
     </div>
   </section>
 
   <!-- LOGINS -->
   <section id="p-logins" class="page hidden">
-    <h2 class="title">گاہکوں کے لاگ ان</h2>
+    <h2 class="title" data-i18n="m_logins"></h2>
     <div class="subtabs" id="loginSubtabs">
-      <button data-s="Pending" onclick="loginFilter('Pending')">🟡 منظوری باقی</button>
-      <button data-s="Approved" onclick="loginFilter('Approved')">🟢 منظور شدہ</button>
-      <button data-s="Rejected" onclick="loginFilter('Rejected')">🔴 مسترد</button>
+      <button data-s="Pending" onclick="loginFilter('Pending')"><i class="dot y"></i><span data-i18n="lt_pending"></span></button>
+      <button data-s="Approved" onclick="loginFilter('Approved')"><i class="dot g"></i><span data-i18n="lt_approved"></span></button>
+      <button data-s="Rejected" onclick="loginFilter('Rejected')"><i class="dot r"></i><span data-i18n="lt_rejected"></span></button>
     </div>
     <div id="loginList"></div>
   </section>
 
   <!-- SETTINGS -->
   <section id="p-settings" class="page hidden">
-    <h2 class="title">سیٹنگ</h2>
+    <h2 class="title" data-i18n="m_settings"></h2>
     <div class="card">
-      <h3>گاہکوں کی ایپ کا لنک</h3>
-      <p class="muted">یہ لنک گاہک کو بھیجیں، وہ اپنے موبائل نمبر سے لاگ ان کی درخواست دے گا</p>
+      <h3 data-i18n="language"></h3>
+      <div id="lsSettings"></div>
+    </div>
+    <div class="card">
+      <h3 data-i18n="portal_link_title"></h3>
+      <p class="muted" data-i18n="portal_link_hint"></p>
       <div class="ltr muted" id="portalLink" style="word-break:break-all"></div>
-      <button class="btn light" onclick="copyText(portalUrl())">📋 کاپی</button>
+      <button class="btn light" onclick="copyText(portalUrl())" data-i18n="copy"></button>
     </div>
     <div class="card">
-      <h3>دکان کا WhatsApp نمبر</h3>
+      <h3 data-i18n="shop_wa"></h3>
       <input id="s_mobile" type="tel" placeholder="03236264593">
-      <button class="btn" onclick="saveSettings('mobile')">محفوظ کریں</button>
+      <button class="btn" onclick="saveSettings('mobile')" data-i18n="save_plain"></button>
     </div>
     <div class="card">
-      <h3>پاس ورڈ تبدیل کریں</h3>
-      <input id="s_pwd1" type="password" placeholder="نیا پاس ورڈ">
-      <input id="s_pwd2" type="password" placeholder="دوبارہ لکھیں" style="margin-top:8px">
-      <button class="btn" onclick="saveSettings('pwd')">تبدیل کریں</button>
+      <h3 data-i18n="change_pwd"></h3>
+      <input id="s_pwd1" type="password" data-i18n-ph="new_pwd">
+      <input id="s_pwd2" type="password" data-i18n-ph="repeat_pwd" style="margin-top:8px">
+      <button class="btn" onclick="saveSettings('pwd')" data-i18n="change"></button>
     </div>
-    <button class="btn red block" onclick="logout()">🚪 لاگ آؤٹ</button>
   </section>
 </main>
 
-<button class="fab hidden" id="fab" onclick="openCustForm()">+</button>
 
 <div class="overlay" id="overlay" onclick="toggleMenu(false)"></div>
 <aside class="sidebar" id="sidebar">
-  <div class="side-head"><img src="logo.png" alt="MHM"><b>MHM <span>ELECTRONICS</span></b></div>
+  <div class="side-head"><img src="logo.png" alt="MHM"><b>MHM <span>ELECTRONICS</span></b><small>ADMIN PANEL</small></div>
+  <div id="lsSide" style="text-align:center;margin-bottom:12px"></div>
   <nav id="nav">
-    <button data-p="home" onclick="go('home')"><i>🏠</i>ڈیش بورڈ</button>
-    <button data-p="pays" onclick="go('pays')"><i>💰</i>قسطیں اور تصدیق<span class="nav-badge hidden" id="nbPays"></span></button>
-    <button data-p="custs" onclick="go('custs')"><i>👥</i>گاہک</button>
-    <button data-p="newCust" onclick="openCustForm()"><i>➕</i>نیا گاہک</button>
-    <button data-p="logins" onclick="go('logins')"><i>🔐</i>گاہکوں کے لاگ ان<span class="nav-badge hidden" id="nbLogins"></span></button>
-    <button data-p="settings" onclick="go('settings')"><i>⚙️</i>سیٹنگ</button>
+    <button class="nav-item" data-p="home" onclick="go('home')"><span class="nav-tile"><svg class="ico"><use href="#i-home"/></svg></span><span data-i18n="m_dash"></span></button>
+    <button class="nav-item" data-p="pays" onclick="go('pays')"><span class="nav-tile"><svg class="ico"><use href="#i-pay"/></svg></span><span data-i18n="m_pays"></span><span class="nav-badge hidden" id="nbPays"></span></button>
+    <button class="nav-item" data-p="custs" onclick="go('custs')"><span class="nav-tile"><svg class="ico"><use href="#i-users"/></svg></span><span data-i18n="m_custs"></span></button>
+    <button class="nav-item" data-p="newCust" onclick="openCustForm()"><span class="nav-tile"><svg class="ico"><use href="#i-useradd"/></svg></span><span data-i18n="m_newcust"></span></button>
+    <button class="nav-item" data-p="logins" onclick="go('logins')"><span class="nav-tile"><svg class="ico"><use href="#i-lock"/></svg></span><span data-i18n="m_logins"></span><span class="nav-badge hidden" id="nbLogins"></span></button>
+    <button class="nav-item" data-p="settings" onclick="go('settings')"><span class="nav-tile"><svg class="ico"><use href="#i-gear"/></svg></span><span data-i18n="m_settings"></span></button>
   </nav>
-  <div class="side-foot"><button class="btn red block" onclick="logout()">🚪 لاگ آؤٹ</button></div>
+  <div class="side-foot"><button class="btn light block" onclick="logout()"><svg class="ico"><use href="#i-logout"/></svg><span data-i18n="logout"></span></button></div>
 </aside>
+
+<nav class="dock" id="dock">
+  <button data-p="home" onclick="go('home')"><span class="nav-tile"><svg class="ico"><use href="#i-home"/></svg></span><span data-i18n="m_dash"></span></button>
+  <button data-p="pays" onclick="go('pays')"><span class="nav-tile"><svg class="ico"><use href="#i-pay"/></svg></span><span data-i18n="dock_pays"></span><span class="nav-badge hidden" id="nbPays2"></span></button>
+  <button class="dock-add" data-p="newCust" onclick="openCustForm()"><span class="nav-tile"><svg class="ico"><use href="#i-plus"/></svg></span><span data-i18n="m_newcust"></span></button>
+  <button data-p="custs" onclick="go('custs')"><span class="nav-tile"><svg class="ico"><use href="#i-users"/></svg></span><span data-i18n="m_custs"></span></button>
+  <button data-p="logins" onclick="go('logins')"><span class="nav-tile"><svg class="ico"><use href="#i-lock"/></svg></span><span data-i18n="dock_logins"></span><span class="nav-badge hidden" id="nbLogins2"></span></button>
+</nav>
 
 <div id="modalHost"></div>
 <div id="toast"></div>
@@ -233,6 +263,22 @@
 <script>
 var PWD = '', SHOP = { shopName: 'MHM Electronics' }, curCust = null, curPayStatus = 'Pending Shop', curLoginStatus = 'Pending', searchTimer = null, editId = '';
 var PAGES = ['home', 'pays', 'custs', 'cust', 'custForm', 'dealForm', 'logins', 'settings'];
+
+['lsLogin', 'lsSide', 'lsSettings'].forEach(function (id) { $(id).innerHTML = langSwitchHtml(); });
+
+function fillItemTypes() {
+  var sel = $('d_itemType'), cur = sel.selectedIndex;
+  sel.innerHTML = t('items').map(function (x) { return '<option>' + esc(x) + '</option>'; }).join('');
+  if (cur > 0) sel.selectedIndex = cur;
+}
+
+function currentPage() { return PAGES.filter(function (x) { return !$('p-' + x).classList.contains('hidden'); })[0] || ''; }
+
+window.onLangChange = function () {
+  fillItemTypes();
+  $('custFormTitle').textContent = editId ? t('cf_title_edit') : t('m_newcust');
+  if (PWD) refreshPage();
+};
 
 function login() {
   var p = $('pwd').value;
@@ -245,24 +291,23 @@ function login() {
     go('home');
   }).catch(function (e) { fail(e); store('mhm_admin', null); });
 }
-function logout() { PWD = ''; store('mhm_admin', null); $('pwd').value = ''; $('loginScreen').classList.remove('hidden'); }
+function logout() { PWD = ''; store('mhm_admin', null); $('pwd').value = ''; toggleMenu(false); $('loginScreen').classList.remove('hidden'); }
 function adminFail(e) { if (String(e.message) === 'WRONG_PASSWORD') logout(); fail(e); }
 
-function show(p) {
-  PAGES.forEach(function (x) { $('p-' + x).classList.add('hidden'); });
-  $('p-' + p).classList.remove('hidden');
-  var nav = { cust: 'custs', custForm: (editId ? 'custs' : 'newCust'), dealForm: 'custs' }[p] || p;
-  toggleMenu(false);
-  var b = $('nav').querySelectorAll('button');
-  for (var i = 0; i < b.length; i++) b[i].classList.toggle('active', b[i].getAttribute('data-p') === nav);
-  $('fab').classList.toggle('hidden', p !== 'custs');
-  window.scrollTo(0, 0);
-}
 function toggleMenu(open) {
   var sb = $('sidebar');
   if (open === undefined) open = !sb.classList.contains('open');
   sb.classList.toggle('open', open);
   $('overlay').classList.toggle('show', open);
+}
+function show(p) {
+  PAGES.forEach(function (x) { $('p-' + x).classList.add('hidden'); });
+  $('p-' + p).classList.remove('hidden');
+  var nav = { cust: 'custs', custForm: (editId ? 'custs' : 'newCust'), dealForm: 'custs' }[p] || p;
+  var b = document.querySelectorAll('#nav [data-p], #dock [data-p]');
+  for (var i = 0; i < b.length; i++) b[i].classList.toggle('active', b[i].getAttribute('data-p') === nav);
+  toggleMenu(false);
+  window.scrollTo(0, 0);
 }
 function go(p, noPush) {
   show(p);
@@ -281,12 +326,14 @@ window.onpopstate = function (e) {
   go(p, true);
 };
 function refreshPage() {
-  var cur = PAGES.filter(function (x) { return !$('p-' + x).classList.contains('hidden'); })[0] || 'home';
-  if (cur === 'cust' && curCust) openCustomer(curCust.customer.id, true); else go(cur, true);
+  var cur = currentPage() || 'home';
+  if (cur === 'cust' && curCust) openCustomer(curCust.customer.id, true);
+  else if (cur === 'custForm' || cur === 'dealForm') show(cur);
+  else go(cur, true);
 }
-function copyText(t) {
-  if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { toast('کاپی ہو گیا ✅'); });
-  else prompt('کاپی کریں:', t);
+function copyText(x) {
+  if (navigator.clipboard) navigator.clipboard.writeText(x).then(function () { toast(t('copied')); });
+  else prompt('', x);
 }
 
 // ---------- Home ----------
@@ -301,24 +348,23 @@ function loadHome() {
     setBadge('nbPays', d.pendingShop);
     setBadge('nbLogins', d.pendingLogins);
     var a = '';
-    if (d.pendingShop) a += alertCard('🟡 پروف آئے ہیں، آپ کی تصدیق باقی', d.pendingShop, "go('pays');payFilter('Pending Shop')");
-    if (d.pendingLogins) a += alertCard('🔐 لاگ ان کی درخواستیں', d.pendingLogins, "go('logins')");
-    if (d.pendingCustomer) a += alertCard('🔵 گاہک کی تصدیق باقی', d.pendingCustomer, "go('pays');payFilter('Shop Received')");
-    if (d.pendingDelivery) a += alertCard('📦 پراڈکٹ وصولی کی تصدیق باقی', d.pendingDelivery, "go('custs')");
+    if (d.pendingShop) a += alertCard(t('al_proofs'), d.pendingShop, "go('pays');payFilter('Pending Shop')");
+    if (d.pendingLogins) a += alertCard(t('al_logins'), d.pendingLogins, "go('logins')");
+    if (d.pendingCustomer) a += alertCard(t('al_custconf'), d.pendingCustomer, "go('pays');payFilter('Shop Received')");
+    if (d.pendingDelivery) a += alertCard(t('al_delivery'), d.pendingDelivery, "go('custs')");
     $('alerts').innerHTML = a;
-    if (!d.overdue.length) { $('overdueList').innerHTML = '<p class="muted">الحمد للہ، کوئی قسط لیٹ نہیں ✅</p>'; return; }
+    if (!d.overdue.length) { $('overdueList').innerHTML = '<p class="muted">' + t('no_late') + '</p>'; return; }
     $('overdueList').innerHTML = d.overdue.map(function (o) {
-      var msg = '*' + SHOP.shopName + '*\nالسلام علیکم ' + o.customerName + '\nآپ کی ' + o.count + ' قسط (' + money(o.amount) +
-        ') ادا ہونا باقی ہے۔\nاکاؤنٹ نمبر: ' + o.accountNo + '\nبراہ کرم جلد ادائیگی فرمائیں۔\n' + portalUrl();
+      var msg = t('wa_reminder', { shop: SHOP.shopName, name: o.customerName, count: o.count, amount: money(o.amount), acc: o.accountNo, url: portalUrl() });
       return '<div class="list-item" style="cursor:default"><div class="avatar" style="background:#fde3e3;color:#d64545">' + o.count +
         '</div><div class="info" onclick="openCustomer(\'' + o.customerId + '\')"><b>' + esc(o.customerName) + '</b> <span class="muted num">' + esc(o.accountNo) +
-        '</span><br><span class="muted">' + esc(o.item) + ' | <span class="num">' + money(o.amount) + '</span> | سب سے پرانی <span class="num">' +
-        esc(o.oldest) + '</span></span></div><a class="btn wa sm" target="_blank" href="' + waLink(o.waNumber, msg) + '">یاد دہانی</a></div>';
+        '</span><br><span class="muted">' + esc(o.item) + ' | <span class="num">' + money(o.amount) + '</span> | ' + t('oldest') + ' <span class="num">' +
+        esc(o.oldest) + '</span></span></div><a class="btn wa sm" target="_blank" href="' + waLink(o.waNumber, msg) + '">' + t('reminder') + '</a></div>';
     }).join('');
   }).catch(adminFail);
 }
-function alertCard(t, n, onclick) { return '<div class="alert-card" onclick="' + onclick + '"><span>' + t + '</span><b>' + n + '</b></div>'; }
-function setBadge(id, n) { $(id).textContent = n; $(id).classList.toggle('hidden', !n); }
+function alertCard(txt, n, onclick) { return '<div class="alert-card" onclick="' + onclick + '"><span>' + txt + '</span><b>' + n + '</b></div>'; }
+function setBadge(id, n) { [id, id + '2'].forEach(function (x) { if ($(x)) { $(x).textContent = n; $(x).classList.toggle('hidden', !n); } }); }
 
 // ---------- Payments ----------
 function payFilter(s) {
@@ -327,30 +373,31 @@ function payFilter(s) {
   for (var i = 0; i < b.length; i++) b[i].classList.toggle('active', b[i].getAttribute('data-s') === s);
   $('payList').innerHTML = '<p class="muted">...</p>';
   api('listPayments', [PWD, s], true).then(function (list) {
-    if (!list.length) { $('payList').innerHTML = '<div class="card muted">کوئی ریکارڈ نہیں</div>'; return; }
+    if (!list.length) { $('payList').innerHTML = '<div class="card muted">' + t('no_records') + '</div>'; return; }
     $('payList').innerHTML = list.map(function (p) {
-      var act = p.status === 'Pending Shop'
-        ? '<button class="btn green sm" onclick="confirmPay(\'' + p.receiptNo + '\')">✅ قسط موصول</button><button class="btn red sm" onclick="rejectPay(\'' + p.receiptNo + '\')">❌ مسترد</button>'
-        : '<button class="btn light sm" onclick="showReceipt(\'' + p.receiptNo + '\')">🧾 رسید</button>';
-      return '<div class="card"><div class="row"><b>' + esc(p.customerName) + '</b>' + badge(p.status) + '</div>' +
-        '<div class="row"><span class="muted num">' + esc(p.receiptNo) + ' | ' + esc(p.accountNo) + '</span><b class="num" style="color:var(--navy)">' + money(p.amount) + '</b></div>' +
-        '<div class="row"><span class="muted">' + esc(p.method) + ' — ' + (p.submittedBy === 'Customer' ? 'گاہک نے بھیجا' : 'دکان پر') + '</span><span class="muted num">' + esc(p.date) + '</span></div>' +
-        (p.rejectReason ? '<div class="muted">وجہ: ' + esc(p.rejectReason) + '</div>' : '') +
-        (p.proof ? '<a class="btn light sm" target="_blank" href="' + esc(p.proof) + '">🖼️ پروف دیکھیں</a>' : '') + act + '</div>';
+      var act = (p.proof ? '<a class="btn light sm" target="_blank" href="' + esc(p.proof) + '">' + t('view_proof') + '</a>' : '') +
+        (p.status === 'Pending Shop'
+          ? '<button class="btn gold sm" onclick="confirmPay(\'' + p.receiptNo + '\')">' + t('btn_received') + '</button><button class="btn red sm" onclick="rejectPay(\'' + p.receiptNo + '\')">' + t('btn_reject') + '</button>'
+          : '<button class="btn sm" onclick="showReceipt(\'' + p.receiptNo + '\')">' + t('btn_receipt') + '</button>');
+      return '<div class="card pay-card"><div class="pc-top"><span class="name-pill">' + esc(p.customerName) + '</span>' + badge(p.status) + '</div>' +
+        '<div class="pc-amt">' + money(p.amount) + '</div>' +
+        '<div class="pc-meta"><span class="num">' + esc(p.receiptNo) + ' · ' + esc(p.accountNo) + '</span> · ' + esc(p.method) + ' · ' + (p.submittedBy === 'Customer' ? t('sent_by_customer') : t('at_shop')) + '</div>' +
+        '<div class="pc-time"><svg class="ico"><use href="#i-clock"/></svg><span class="num">' + esc(p.date) + '</span></div>' +
+        (p.rejectReason ? '<div class="muted">' + t('reason') + ': ' + esc(p.rejectReason) + '</div>' : '') +
+        '<div class="pc-actions">' + act + '</div></div>';
     }).join('');
   }).catch(adminFail);
 }
 function confirmPay(no) {
-  if (!confirm('کیا آپ نے پروف چیک کر لیا ہے اور قسط ' + no + ' آپ کو موصول ہو گئی ہے؟')) return;
-  api('shopConfirm', [PWD, no]).then(function (r) { toast('قسط موصول درج ہو گئی ✅'); receiptModal(r); payFilter(curPayStatus); }).catch(adminFail);
+  if (!confirm(t('confirm_received_q', { no: no }))) return;
+  api('shopConfirm', [PWD, no]).then(function (r) { toast(t('recorded_ok')); receiptModal(r); payFilter(curPayStatus); }).catch(adminFail);
 }
 function rejectPay(no) {
-  var reason = prompt('مسترد کرنے کی وجہ:', 'رقم موصول نہیں ہوئی');
+  var reason = prompt(t('reject_reason_q'), t('reject_default'));
   if (reason === null) return;
   api('shopReject', [PWD, no, reason]).then(function (r) {
-    var msg = '*' + SHOP.shopName + '*\nالسلام علیکم ' + r.customer.name + '\nآپ کی جمع کرائی گئی قسط (رسید ' + no + '، ' + money(r.payment.amount) +
-      ') مسترد کر دی گئی ہے۔\nوجہ: ' + reason + '\nبراہ کرم دکان سے رابطہ کریں۔';
-    modal('<h3>مسترد کر دی گئی</h3><a class="btn wa block" target="_blank" href="' + waLink(r.waNumber, msg) + '">📲 گاہک کو WhatsApp پر اطلاع دیں</a><button class="btn light block" onclick="closeModal()">بند کریں</button>');
+    var msg = t('wa_reject', { shop: SHOP.shopName, name: r.customer.name, no: no, amount: money(r.payment.amount), reason: reason });
+    modal('<h3>' + t('rejected_title') + '</h3><a class="btn wa block" target="_blank" href="' + waLink(r.waNumber, msg) + '">' + t('notify_customer_wa') + '</a><button class="btn light block" onclick="closeModal()">' + t('close') + '</button>');
     payFilter(curPayStatus);
   }).catch(adminFail);
 }
@@ -360,37 +407,36 @@ var lastReceipt = null;
 function receiptModal(r) {
   lastReceipt = r;
   var p = r.payment, d = r.deal;
-  var msg = '*' + r.shop.shopName + '*\n*قسط کی رسید*\n\nرسید نمبر: ' + p.receiptNo + '\nاکاؤنٹ نمبر: ' + d.accountNo + '\nنام: ' + r.customer.name +
-    '\nپراڈکٹ: ' + d.company + ' ' + d.model + '\nرقم: ' + money(p.amount) + '\nتاریخ: ' + (p.shopConfirmedAt || p.date) +
-    '\n\nکل قسطیں: ' + d.schedule.length + ' | ادا شدہ: ' + d.paidCount + ' | باقی: ' + d.remainingCount +
-    '\nکل ادا شدہ: ' + money(d.totalPaid) + '\nبقایا: ' + money(d.balance) +
-    (p.status === 'Shop Received' ? '\n\n✅ آپ کی قسط ہمیں موصول ہو گئی ہے۔ براہ کرم ایپ کھول کر *"میں تصدیق کرتا ہوں"* کا بٹن دبائیں:\n' + portalUrl() : '');
-  modal('<div style="transform:scale(.82);transform-origin:top center;margin-bottom:-90px">' + receiptHtml(r) + '</div>' +
-    '<button class="btn gold block" onclick="shareReceipt(lastReceipt)">🖼️ رسید کی تصویر شیئر کریں</button>' +
-    '<a class="btn wa block" target="_blank" href="' + waLink(r.waNumber, msg) + '">📲 WhatsApp پر رسید اور تصدیق کا پیغام</a>' +
-    (p.status === 'Confirmed' ? '<p style="color:var(--green);text-align:center">✅ گاہک نے تصدیق کر دی: <span class="num">' + esc(p.customerConfirmedAt) + '</span></p>' : '') +
-    '<button class="btn light block" onclick="closeModal()">بند کریں</button>');
+  var msg = t('wa_receipt', { shop: r.shop.shopName, no: p.receiptNo, acc: d.accountNo, name: r.customer.name, item: d.company + ' ' + d.model,
+    amount: money(p.amount), date: p.shopConfirmedAt || p.date, total: d.schedule.length, paidc: d.paidCount, left: d.remainingCount,
+    paid: money(d.totalPaid), bal: money(d.balance) }) +
+    (p.status === 'Shop Received' ? t('wa_confirm_ask', { url: portalUrl() }) : '');
+  modal('<div style="transform:scale(.82);transform-origin:top center;margin-bottom:-120px">' + receiptHtml(r) + '</div>' +
+    '<button class="btn gold block" onclick="shareReceipt(lastReceipt)">' + t('share_receipt_img') + '</button>' +
+    '<a class="btn wa block" target="_blank" href="' + waLink(r.waNumber, msg) + '">' + t('wa_receipt_btn') + '</a>' +
+    (p.status === 'Confirmed' ? '<p style="color:var(--green);text-align:center">' + t('cust_confirmed_at') + ' <span class="num">' + esc(p.customerConfirmedAt) + '</span></p>' : '') +
+    '<button class="btn light block" onclick="closeModal()">' + t('close') + '</button>');
 }
 
 function openPayForm(acc) {
-  modal('<h3>💰 دکان پر قسط وصول کریں</h3>' +
-    '<label>اکاؤنٹ نمبر *</label><input id="pm_acc" class="ltr" value="' + esc(acc) + '" placeholder="MHM-0001">' +
-    '<label>رقم *</label><input id="pm_amount" type="number" inputmode="numeric">' +
-    '<label>طریقہ</label><select id="pm_method"><option>نقد</option><option>JazzCash</option><option>Easypaisa</option><option>بینک</option></select>' +
-    '<label>پروف (اختیاری)</label><input type="file" accept="image/*" id="pm_proof">' +
-    '<label>نوٹ</label><input id="pm_notes">' +
-    '<button class="btn green block" onclick="savePay()">✅ وصول کریں</button><button class="btn light block" onclick="closeModal()">بند کریں</button>');
+  modal('<h3>' + t('recv_title') + '</h3>' +
+    '<label>' + t('account_no') + ' *</label><input id="pm_acc" class="ltr" value="' + esc(acc) + '" placeholder="MHM-0001">' +
+    '<label>' + t('amount') + ' *</label><input id="pm_amount" type="number" inputmode="numeric">' +
+    '<label>' + t('method') + '</label><select id="pm_method"><option>' + t('cash') + '</option><option>JazzCash</option><option>Easypaisa</option><option>' + t('bank') + '</option></select>' +
+    '<label>' + t('proof_optional') + '</label><input type="file" accept="image/*" id="pm_proof">' +
+    '<label>' + t('notes') + '</label><input id="pm_notes">' +
+    '<button class="btn green block" onclick="savePay()">' + t('btn_receive') + '</button><button class="btn light block" onclick="closeModal()">' + t('close') + '</button>');
 }
 function savePay() {
   var acc = $('pm_acc').value.trim().toUpperCase(), amt = Number($('pm_amount').value);
-  if (!acc || !(amt > 0)) { toast('اکاؤنٹ نمبر اور رقم لکھیں', true); return; }
+  if (!acc || !(amt > 0)) { toast(t('need_acc_amt'), true); return; }
   busy(true);
   readImage($('pm_proof')).then(function (proof) {
     return api('recordPayment', [PWD, { accountNo: acc, amount: amt, method: $('pm_method').value, notes: $('pm_notes').value, proof: proof }]);
   }).then(function (r) {
-    toast('قسط وصول ہو گئی ✅');
+    toast(t('payment_received_ok'));
     receiptModal(r);
-    if (curCust && !$('p-cust').classList.contains('hidden')) openCustomer(curCust.customer.id, true);
+    if (curCust && currentPage() === 'cust') openCustomer(curCust.customer.id, true);
   }).catch(adminFail);
 }
 
@@ -398,10 +444,10 @@ function savePay() {
 function searchDelay() { clearTimeout(searchTimer); searchTimer = setTimeout(doSearch, 400); }
 function doSearch() {
   api('searchCustomers', [PWD, $('q').value], true).then(function (list) {
-    if (!list.length) { $('custList').innerHTML = '<p class="muted">کوئی گاہک نہیں ملا</p>'; return; }
+    if (!list.length) { $('custList').innerHTML = '<p class="muted">' + t('no_cust') + '</p>'; return; }
     $('custList').innerHTML = list.map(function (c) {
       return '<div class="list-item" onclick="openCustomer(\'' + c.id + '\')"><div class="avatar">' + initial(c.name) + '</div><div class="info"><b>' + esc(c.name) +
-        '</b> <span class="muted">ولد ' + esc(c.fatherName) + '</span><br><span class="muted num">' + esc(c.id) + ' | ' + esc(c.mobile) + '</span></div>' + badge(c.rating) + '</div>';
+        '</b> <span class="muted">' + t('son_of') + ' ' + esc(c.fatherName) + '</span><br><span class="muted num">' + esc(c.id) + ' | ' + esc(c.mobile) + '</span></div>' + badge(c.rating) + '</div>';
     }).join('');
   }).catch(adminFail);
 }
@@ -410,22 +456,23 @@ function openCustomer(id, noPush) {
   api('getCustomer', [PWD, id]).then(function (r) {
     curCust = r;
     var c = r.customer;
-    var doc = function (u, t) { return u ? '<a class="btn light sm" target="_blank" href="' + esc(u) + '">' + t + '</a>' : ''; };
-    var loginTxt = r.login ? badge(r.login.status) + (r.login.approvedAt ? ' <span class="muted num">' + esc(r.login.approvedAt) + '</span>' : '') : '<span class="muted">ابھی درخواست نہیں دی</span>';
-    var h = '<div class="hero"><div style="display:flex;gap:12px;align-items:center"><div class="avatar" style="width:54px;height:54px;font-size:22px">' + initial(c.name) + '</div>' +
-      '<div><b style="font-size:19px">' + esc(c.name) + '</b><div class="sub">ولد ' + esc(c.fatherName) + '</div></div></div>' +
-      '<div class="sub" style="margin-top:6px">' + badge(c.rating) + ' <span class="num">' + esc(c.id) + '</span></div></div>' +
-      '<div class="card"><div class="row"><span class="muted">موبائل</span><span class="num">' + esc(c.mobile) + '</span></div>' +
-      '<div class="row"><span class="muted">شناختی کارڈ</span><span class="num">' + esc(c.cnic) + '</span></div>' +
-      '<div class="row"><span class="muted">پتہ</span><span>' + esc(c.address) + '</span></div>' +
-      '<div class="row"><span class="muted">ضامن</span><span>' + esc(c.gName) + ' <span class="num">' + esc(c.gMobile) + '</span></span></div>' +
-      '<div class="row"><span class="muted">ضامن کا کارڈ</span><span class="num">' + esc(c.gCnic) + '</span></div>' +
-      '<div class="row"><span class="muted">ایپ لاگ ان</span><span>' + loginTxt + '</span></div>' +
-      (c.notes ? '<div class="muted">نوٹ: ' + esc(c.notes) + '</div>' : '') +
-      '<div>' + doc(c.photo, '🖼️ تصویر') + doc(c.cnicFront, '🪪 کارڈ آگے') + doc(c.cnicBack, '🪪 کارڈ پیچھے') + doc(c.gCnicFront, '🪪 ضامن آگے') + doc(c.gCnicBack, '🪪 ضامن پیچھے') + '</div>' +
-      '<button class="btn gold" onclick="openDealForm()">+ نیا سودا</button><button class="btn light" onclick="openCustForm(true)">✏️ ترمیم</button>' +
-      '<a class="btn wa" target="_blank" href="' + waLink(waNum(c.mobile), appInviteMsg(c)) + '">📲 ایپ کا لنک بھیجیں</a></div>';
-    if (!r.deals.length) h += '<div class="card muted">ابھی اس گاہک کا کوئی سودا نہیں۔</div>';
+    var doc = function (u, k) { return u ? '<a class="btn light sm" target="_blank" href="' + esc(u) + '">' + t(k) + '</a>' : ''; };
+    var loginTxt = r.login ? badge(r.login.status) + (r.login.approvedAt ? ' <span class="muted num">' + esc(r.login.approvedAt) + '</span>' : '') : '<span class="muted">' + t('no_request') + '</span>';
+    var h = '<div class="frame-shadow"><div class="hero"><div style="display:flex;gap:12px;align-items:center"><div class="avatar" style="width:54px;height:54px;font-size:22px">' + initial(c.name) + '</div>' +
+      '<div><b style="font-size:19px">' + esc(c.name) + '</b><div class="sub">' + t('son_of') + ' ' + esc(c.fatherName) + '</div></div></div>' +
+      '<div class="sub" style="margin-top:6px">' + badge(c.rating) + ' <span class="num">' + esc(c.id) + '</span>' + (c.source === 'Self' ? ' <span class="badge b-Pending">' + t('self_registered') + '</span>' : '') + '</div></div></div>' +
+      '<div class="card"><div class="row"><span class="muted">' + t('mobile') + '</span><span class="num">' + esc(c.mobile) + '</span></div>' +
+      '<div class="row"><span class="muted">' + t('cnic') + '</span><span class="num">' + esc(c.cnic) + '</span></div>' +
+      '<div class="row"><span class="muted">' + t('address') + '</span><span>' + esc(c.address) + '</span></div>' +
+      '<div class="row"><span class="muted">' + t('guarantor') + '</span><span>' + esc(c.gName) + ' <span class="num">' + esc(c.gMobile) + '</span></span></div>' +
+      '<div class="row"><span class="muted">' + t('g_cnic') + '</span><span class="num">' + esc(c.gCnic) + '</span></div>' +
+      '<div class="row"><span class="muted">' + t('app_login') + '</span><span>' + loginTxt + '</span></div>' +
+      (c.notes ? '<div class="muted">' + t('notes') + ': ' + esc(c.notes) + '</div>' : '') +
+      '<div>' + doc(c.photo, 'doc_photo') + doc(c.cnicFront, 'doc_cf') + doc(c.cnicBack, 'doc_cb') + doc(c.gCnicFront, 'doc_gcf') + doc(c.gCnicBack, 'doc_gcb') + '</div>' +
+      (r.login && r.login.status === 'Pending' ? '<button class="btn green" onclick="approveLogin(\'' + r.login.mobile + '\')">' + t('approve') + '</button><button class="btn red" onclick="rejectLogin(\'' + r.login.mobile + '\')">' + t('btn_reject') + '</button><br>' : '') +
+      '<button class="btn gold" onclick="openDealForm()">' + t('new_deal') + '</button><button class="btn light" onclick="openCustForm(true)">' + t('edit') + '</button>' +
+      '<a class="btn wa" target="_blank" href="' + waLink(waNum(c.mobile), t('wa_invite', { shop: SHOP.shopName, name: c.name, url: portalUrl(), mobile: c.mobile })) + '">' + t('send_app_link') + '</a></div>';
+    if (!r.deals.length) h += '<div class="card muted">' + t('no_deals') + '</div>';
     r.deals.forEach(function (d, i) { h += dealCard(c, d, i); });
     $('custDetail').innerHTML = h;
     show('cust');
@@ -435,45 +482,38 @@ function openCustomer(id, noPush) {
 
 function dealCard(c, d, i) {
   var pct = d.totalPrice ? Math.min(100, Math.round(d.totalPaid * 100 / d.totalPrice)) : 0;
-  var ack = (d.ackCustomer ? '✅ گاہک: <span class="num">' + esc(d.ackCustomer) + '</span>' : '🟡 گاہک کا اقرار باقی') + '<br>' +
-    (d.ackShop ? '✅ کمپنی: <span class="num">' + esc(d.ackShop) + '</span>' : '<button class="btn green sm" onclick="shopAck(\'' + d.accountNo + '\')">✅ پراڈکٹ حوالے کر دی</button>');
+  var ack = (d.ackCustomer ? t('ack_cust_done') + ' <span class="num">' + esc(d.ackCustomer) + '</span>' : t('ack_cust_pending')) + '<br>' +
+    (d.ackShop ? t('ack_shop_done') + ' <span class="num">' + esc(d.ackShop) + '</span>' : '<button class="btn green sm" onclick="shopAck(\'' + d.accountNo + '\')">' + t('btn_handed') + '</button>');
   var sched = d.schedule.map(function (s) {
     return '<tr><td class="num">' + s.no + '</td><td class="num">' + esc(s.dueDate) + '</td><td class="num">' + money(s.dueAmount) + '</td><td class="num">' + money(s.remaining) + '</td><td>' + badge(s.status) + '</td></tr>';
   }).join('');
+  var rw = function (k, v, st) { return '<div class="row"><span class="muted">' + t(k) + '</span><span class="num"' + (st ? ' style="' + st + '"' : '') + '>' + v + '</span></div>'; };
   return '<div class="card deal-card"><div class="row"><b class="num" style="font-size:16px">' + esc(d.accountNo) + '</b>' + badge(d.status) + '</div>' +
     '<div><b>' + esc(d.itemType) + ':</b> ' + esc(d.company + ' ' + d.model + ' ' + d.color) + ' <span class="muted">' + esc(d.specs) + '</span></div>' +
-    '<div class="muted">IMEI/سیریل: <span class="num">' + esc(d.serial) + '</span> | تاریخ: <span class="num">' + esc(d.dealDate) + '</span></div>' +
-    '<div class="progress"><div style="width:' + pct + '%"></div></div><div class="muted" style="text-align:center">' + pct + '% ادا — ' + d.paidCount + ' / ' + d.schedule.length + ' قسطیں</div>' +
-    '<div class="grid2"><div class="row"><span class="muted">کل قیمت</span><span class="num">' + money(d.totalPrice) + '</span></div>' +
-    '<div class="row"><span class="muted">ایڈوانس</span><span class="num">' + money(d.advance) + '</span></div>' +
-    '<div class="row"><span class="muted">ماہانہ</span><span class="num">' + money(d.monthly) + ' × ' + d.installments + '</span></div>' +
-    '<div class="row"><span class="muted">ادا شدہ</span><span class="num">' + money(d.totalPaid) + '</span></div>' +
-    '<div class="row"><b>بقایا</b><b class="num" style="color:var(--red)">' + money(d.balance) + '</b></div>' +
-    '<div class="row"><span class="muted">منافع</span><span class="num" style="color:var(--green)">' + money(d.totalPrice - d.costPrice) + '</span></div></div>' +
-    (d.chequeNo || d.chequeAccount ? '<div class="muted">🏦 چیک: ' + esc(d.chequeBank) + ' | نمبر <span class="num">' + esc(d.chequeNo) + '</span> | اکاؤنٹ <span class="num">' + esc(d.chequeAccount) + '</span> | ' + esc(d.chequeHolder) + '</div>' : '') +
-    '<div class="ack-box" style="margin-top:6px"><b>📦 پراڈکٹ وصولی</b><br>' + ack + '</div>' +
-    '<details style="margin-top:6px"><summary>📅 قسطوں کا شیڈول</summary><div class="table-wrap"><table><tr><th>#</th><th>تاریخ</th><th>قسط</th><th>باقی</th><th></th></tr>' + sched + '</table></div></details>' +
-    '<button class="btn green sm" onclick="openPayForm(\'' + d.accountNo + '\')">💰 قسط وصول</button>' +
-    '<button class="btn light sm" onclick="printAgreement(curCust.customer, curCust.deals[' + i + '], SHOP.shopName)">🖨️ معاہدہ پرنٹ</button>' +
-    (d.chequeImage ? '<a class="btn light sm" target="_blank" href="' + esc(d.chequeImage) + '">🏦 چیک</a>' : '') +
-    (d.deliveryPhoto ? '<a class="btn light sm" target="_blank" href="' + esc(d.deliveryPhoto) + '">📦 ڈیلیوری</a>' : '') + '</div>';
+    '<div class="muted">' + t('imei_serial') + ': <span class="num">' + esc(d.serial) + '</span> | ' + t('date') + ': <span class="num">' + esc(d.dealDate) + '</span></div>' +
+    '<div class="progress"><div style="width:' + pct + '%"></div></div><div class="muted" style="text-align:center">' + t('paid_pct', { p: pct, a: d.paidCount, b: d.schedule.length }) + '</div>' +
+    '<div class="grid2">' + rw('total_price', money(d.totalPrice)) + rw('advance', money(d.advance)) +
+    rw('monthly', money(d.monthly) + ' × ' + d.installments) + rw('paid', money(d.totalPaid)) +
+    rw('balance', '<b>' + money(d.balance) + '</b>', 'color:var(--red)') + rw('profit', money(d.totalPrice - d.costPrice), 'color:var(--green)') + '</div>' +
+    (d.chequeNo || d.chequeAccount ? '<div class="muted">' + t('cheque_short') + ': ' + esc(d.chequeBank) + ' | ' + t('no_short') + ' <span class="num">' + esc(d.chequeNo) + '</span> | ' + t('account') + ' <span class="num">' + esc(d.chequeAccount) + '</span> | ' + esc(d.chequeHolder) + '</div>' : '') +
+    '<div class="ack-box" style="margin-top:6px"><b>' + t('delivery_title') + '</b><br>' + ack + '</div>' +
+    '<details style="margin-top:6px"><summary>' + t('schedule') + '</summary><div class="table-wrap"><table><tr><th>#</th><th>' + t('date') + '</th><th>' + t('inst') + '</th><th>' + t('remaining') + '</th><th></th></tr>' + sched + '</table></div></details>' +
+    '<button class="btn green sm" onclick="openPayForm(\'' + d.accountNo + '\')">' + t('btn_recv_inst') + '</button>' +
+    '<button class="btn light sm" onclick="printAgreement(curCust.customer, curCust.deals[' + i + '])">' + t('btn_print') + '</button>' +
+    (d.chequeImage ? '<a class="btn light sm" target="_blank" href="' + esc(d.chequeImage) + '">' + t('cheque_short') + '</a>' : '') +
+    (d.deliveryPhoto ? '<a class="btn light sm" target="_blank" href="' + esc(d.deliveryPhoto) + '">' + t('btn_delivery') + '</a>' : '') + '</div>';
 }
 
 function shopAck(acc) {
-  if (!confirm('کیا پراڈکٹ گاہک کے حوالے کر دی گئی ہے؟')) return;
-  api('shopAckDelivery', [PWD, acc]).then(function () { toast('درج ہو گیا ✅'); openCustomer(curCust.customer.id, true); }).catch(adminFail);
-}
-
-function appInviteMsg(c) {
-  return '*' + SHOP.shopName + '*\nالسلام علیکم ' + c.name + '\nاپنی قسطوں کا ریکارڈ دیکھنے کے لیے ہماری ایپ کھولیں:\n' + portalUrl() +
-    '\n\n"نئی درخواست" میں اپنا موبائل نمبر (' + c.mobile + ') لکھیں، 4 ہندسوں کا PIN بنائیں اور شرائط قبول کریں۔ منظوری کے بعد آپ لاگ ان کر سکیں گے۔';
+  if (!confirm(t('handed_q'))) return;
+  api('shopAckDelivery', [PWD, acc]).then(function () { toast(t('saved')); openCustomer(curCust.customer.id, true); }).catch(adminFail);
 }
 
 // ---------- Customer form ----------
 var CFIELDS = { name: 'c_name', fatherName: 'c_fatherName', cnic: 'c_cnic', mobile: 'c_mobile', address: 'c_address', gName: 'g_name', gCnic: 'g_cnic', gMobile: 'g_mobile', gAddress: 'g_address', notes: 'c_notes' };
 function openCustForm(edit) {
-  editId = edit && curCust ? curCust.customer.id : '';
-  $('custFormTitle').textContent = editId ? 'گاہک میں ترمیم' : 'نیا گاہک';
+  editId = edit === true && curCust ? curCust.customer.id : '';
+  $('custFormTitle').textContent = editId ? t('cf_title_edit') : t('m_newcust');
   var inputs = $('p-custForm').querySelectorAll('input, textarea');
   for (var i = 0; i < inputs.length; i++) inputs[i].value = '';
   if (editId) { var c = curCust.customer; for (var k in CFIELDS) $(CFIELDS[k]).value = c[k] || ''; }
@@ -483,29 +523,27 @@ function openCustForm(edit) {
 
 function scanInto(input, kind, prefix) {
   if (!input.files.length) return;
-  toast('⏳ اسکین ہو رہا ہے...');
-  readImage(input, 1800).then(function (img) { return api('scan', [PWD, kind, img]); }).then(function (r) {
-    var f = r.fields, n = 0;
-    var set = function (id, v) { if (v && $(id)) { $(id).value = v; n++; } };
-    if (kind === 'cnicFront') { set(prefix + 'name', f.name); set(prefix === 'c_' ? 'c_fatherName' : '', f.fatherName); set(prefix + 'cnic', f.cnic); }
-    if (kind === 'cnicBack') { set(prefix + 'address', f.address); if (!$(prefix + 'cnic').value) set(prefix + 'cnic', f.cnic); }
-    toast(n ? '✅ ' + n + ' خانے بھر گئے، ایک نظر دیکھ لیں' : 'تصویر سے معلومات نہیں پڑھی جا سکیں، صاف تصویر لیں یا خود لکھیں', !n);
+  toast(t('scanning'));
+  readImage(input, 1800).then(function (img) { return api('scan', [PWD, kind, img], true); }).then(function (r) {
+    var ids = prefix === 'c_' ? { name: 'c_name', father: 'c_fatherName', cnic: 'c_cnic', address: 'c_address' }
+                              : { name: 'g_name', cnic: 'g_cnic', address: 'g_address' };
+    fillFromScan(kind, r.fields, ids);
   }).catch(adminFail);
 }
 
 function saveCustomer() {
   var c = {};
   for (var k in CFIELDS) c[k] = $(CFIELDS[k]).value.trim();
-  if (!c.name || !c.mobile) { toast('نام اور موبائل نمبر ضروری ہیں', true); return; }
+  if (!c.name || !c.mobile) { toast(t('need_name_mobile'), true); return; }
   if (editId) {
-    api('updateCustomer', [PWD, editId, c]).then(function () { toast('محفوظ ہو گیا ✅'); openCustomer(editId, true); }).catch(adminFail);
+    api('updateCustomer', [PWD, editId, c]).then(function () { toast(t('saved')); openCustomer(editId, true); }).catch(adminFail);
     return;
   }
   busy(true);
   readImages({ photo: 'f_photo', cnicFront: 'f_cnicFront', cnicBack: 'f_cnicBack', gCnicFront: 'f_gCnicFront', gCnicBack: 'f_gCnicBack' }).then(function (files) {
     c.files = files;
     return api('addCustomer', [PWD, c]);
-  }).then(function (id) { toast('گاہک محفوظ ہو گیا: ' + id + ' ✅'); openCustomer(id); }).catch(adminFail);
+  }).then(function (id) { toast(t('cust_saved', { id: id })); openCustomer(id); }).catch(adminFail);
 }
 
 // ---------- Deal form ----------
@@ -513,6 +551,9 @@ function openDealForm() {
   $('dealCustName').textContent = curCust.customer.name;
   var inputs = $('p-dealForm').querySelectorAll('input, textarea');
   for (var i = 0; i < inputs.length; i++) inputs[i].value = '';
+  $('d_chequeAmount')._auto = true;
+  fillItemTypes();
+  $('d_itemType').selectedIndex = 0;
   var d = new Date(); d.setMonth(d.getMonth() + 1);
   $('d_firstDueDate').value = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
   calcDeal();
@@ -520,104 +561,95 @@ function openDealForm() {
   history.pushState({ p: 'dealForm' }, '', '#dealForm');
 }
 function calcDeal() {
-  var t = Number($('d_totalPrice').value) || 0, a = Number($('d_advance').value) || 0, n = Number($('d_installments').value) || 0, cost = Number($('d_costPrice').value) || 0;
-  if (!t || !n) { $('dealCalc').innerHTML = 'ماہانہ قسط: -'; return; }
-  $('dealCalc').innerHTML = '<div class="row"><span>باقی رقم</span><b class="num">' + money(t - a) + '</b></div>' +
-    '<div class="row"><span>ماہانہ قسط</span><b class="num" style="color:var(--navy)">' + money(Math.round((t - a) / n)) + ' × ' + n + '</b></div>' +
-    (cost ? '<div class="row"><span>منافع</span><b class="num" style="color:var(--green)">' + money(t - cost) + '</b></div>' : '');
-  if (!$('d_chequeAmount').value || $('d_chequeAmount')._auto) { $('d_chequeAmount').value = t - a; $('d_chequeAmount')._auto = true; }
+  var tp = Number($('d_totalPrice').value) || 0, a = Number($('d_advance').value) || 0, n = Number($('d_installments').value) || 0, cost = Number($('d_costPrice').value) || 0;
+  if (!tp || !n) { $('dealCalc').innerHTML = t('monthly_inst') + ': -'; return; }
+  $('dealCalc').innerHTML = '<div class="row"><span>' + t('remaining_amt') + '</span><b class="num">' + money(tp - a) + '</b></div>' +
+    '<div class="row"><span>' + t('monthly_inst') + '</span><b class="num" style="color:var(--navy)">' + money(Math.round((tp - a) / n)) + ' × ' + n + '</b></div>' +
+    (cost ? '<div class="row"><span>' + t('profit') + '</span><b class="num" style="color:var(--green)">' + money(tp - cost) + '</b></div>' : '');
+  if ($('d_chequeAmount')._auto) $('d_chequeAmount').value = tp - a;
 }
+$('d_chequeAmount') && $('d_chequeAmount').addEventListener('input', function () { this._auto = false; });
 
-function scanProduct(input) {
+function scanSimple(input, kind, map) {
   if (!input.files.length) return;
-  toast('⏳ اسکین ہو رہا ہے...');
-  readImage(input, 1800).then(function (img) { return api('scan', [PWD, 'product', img]); }).then(function (r) {
-    var f = r.fields, n = 0;
-    ['company', 'model', 'serial', 'color', 'specs'].forEach(function (k) { if (f[k]) { $('d_' + k).value = f[k]; n++; } });
-    toast(n ? '✅ ' + n + ' خانے بھر گئے، ایک نظر دیکھ لیں' : 'معلومات نہیں پڑھی جا سکیں، خود لکھیں', !n);
+  toast(t('scanning'));
+  readImage(input, 2000).then(function (img) { return api('scan', [PWD, kind, img], true); }).then(function (r) {
+    var n = 0;
+    for (var k in map) { if (r.fields[k]) { $(map[k]).value = r.fields[k]; n++; } }
+    toast(n ? t('scan_filled', { n: n }) : t('scan_none'), !n);
   }).catch(adminFail);
 }
-
-function scanCheque(input) {
-  if (!input.files.length) return;
-  toast('⏳ اسکین ہو رہا ہے...');
-  readImage(input, 2000).then(function (img) { return api('scan', [PWD, 'cheque', img]); }).then(function (r) {
-    var f = r.fields, n = 0;
-    var set = function (id, v) { if (v) { $(id).value = v; n++; } };
-    set('d_chequeBank', f.bank); set('d_chequeAccount', f.account); set('d_chequeNo', f.chequeNo); set('d_chequeHolder', f.holder);
-    toast(n ? '✅ ' + n + ' خانے بھر گئے، ایک نظر دیکھ لیں' : 'معلومات نہیں پڑھی جا سکیں، خود لکھیں', !n);
-  }).catch(adminFail);
-}
+function scanProduct(input) { scanSimple(input, 'product', { company: 'd_company', model: 'd_model', serial: 'd_serial', color: 'd_color', specs: 'd_specs' }); }
+function scanCheque(input) { scanSimple(input, 'cheque', { bank: 'd_chequeBank', account: 'd_chequeAccount', chequeNo: 'd_chequeNo', holder: 'd_chequeHolder' }); }
 
 function scanBarcode() {
-  if (typeof Html5Qrcode === 'undefined') { toast('اسکینر لوڈ نہیں ہوا، انٹرنیٹ چیک کریں', true); return; }
-  modal('<h3>▦ بارکوڈ اسکین</h3><p class="muted">کیمرہ IMEI والے بارکوڈ پر رکھیں</p><div id="reader" style="width:100%"></div><button class="btn light block" onclick="closeModal()">بند کریں</button>');
+  if (typeof Html5Qrcode === 'undefined') { toast(t('scanner_fail'), true); return; }
+  modal('<h3>' + t('barcode_title') + '</h3><p class="muted">' + t('barcode_hint') + '</p><div id="reader" style="width:100%"></div><button class="btn light block" onclick="closeModal()">' + t('close') + '</button>');
   var sc = new Html5Qrcode('reader');
   window._scanner = sc;
   sc.start({ facingMode: 'environment' }, { fps: 10, qrbox: { width: 280, height: 120 } }, function (text) {
     var digits = String(text).replace(/\D/g, '');
-    if (digits.length === 15 || digits.length >= 8) {
+    if (digits.length >= 8) {
       $('d_serial').value = digits.length === 15 ? digits : text;
-      toast('✅ IMEI / سیریل: ' + $('d_serial').value);
+      toast('✅ ' + $('d_serial').value);
       closeModal();
     }
-  }).catch(function () { toast('کیمرہ نہیں کھل سکا، اجازت دیں', true); });
+  }).catch(function () { toast(t('camera_fail'), true); });
 }
 
 function saveDeal() {
   var d = { customerId: curCust.customer.id };
   ['itemType', 'company', 'model', 'color', 'specs', 'serial', 'costPrice', 'cashPrice', 'totalPrice', 'advance', 'installments', 'firstDueDate', 'notes',
     'chequeBank', 'chequeAccount', 'chequeNo', 'chequeHolder', 'chequeAmount'].forEach(function (k) { d[k] = $('d_' + k).value.trim(); });
-  if (!d.company || !d.model || !(Number(d.totalPrice) > 0) || !(Number(d.installments) > 0) || !d.firstDueDate) {
-    toast('کمپنی، ماڈل، کل قیمت، قسطیں اور تاریخ ضروری ہیں', true); return;
-  }
-  if (Number(d.advance) >= Number(d.totalPrice)) { toast('ایڈوانس کل قیمت سے کم ہونا چاہیے', true); return; }
+  if (!d.company || !d.model || !(Number(d.totalPrice) > 0) || !(Number(d.installments) > 0) || !d.firstDueDate) { toast(t('need_deal'), true); return; }
+  if (Number(d.advance) >= Number(d.totalPrice)) { toast(t('adv_too_big'), true); return; }
   busy(true);
   readImages({ delivery: 'f_delivery', cheque: 'f_cheque' }).then(function (files) {
     d.files = files;
     return api('addDeal', [PWD, d]);
   }).then(function (r) {
     var c = curCust.customer;
-    var msg = '*' + SHOP.shopName + '*\nالسلام علیکم ' + c.name + '\nآپ کا قسطوں کا اکاؤنٹ بن گیا ہے۔\n\nاکاؤنٹ نمبر: ' + r.accountNo +
-      '\nپراڈکٹ: ' + d.company + ' ' + d.model + '\nکل قیمت: ' + money(d.totalPrice) + '\nایڈوانس: ' + money(d.advance) +
-      '\nماہانہ قسط: ' + money(r.monthly) + ' (' + d.installments + ' مہینے)\n\nاپنا ریکارڈ دیکھنے کے لیے ایپ:\n' + portalUrl();
-    modal('<h3 style="color:var(--green)">✅ سودا محفوظ ہو گیا</h3><div class="row"><span>اکاؤنٹ نمبر</span><b class="num">' + r.accountNo + '</b></div>' +
-      '<div class="row"><span>ماہانہ قسط</span><b class="num">' + money(r.monthly) + '</b></div>' +
-      '<a class="btn wa block" target="_blank" href="' + waLink(waNum(c.mobile), msg) + '">📲 گاہک کو WhatsApp پر تفصیل بھیجیں</a>' +
-      '<button class="btn light block" onclick="closeModal();openCustomer(curCust.customer.id,true)">ٹھیک ہے</button>');
+    var msg = t('wa_deal', { shop: SHOP.shopName, name: c.name, acc: r.accountNo, item: d.company + ' ' + d.model, total: money(d.totalPrice),
+      adv: money(d.advance), monthly: money(r.monthly), n: d.installments, url: portalUrl() });
+    modal('<h3 style="color:var(--green)">' + t('deal_saved') + '</h3><div class="row"><span>' + t('account_no') + '</span><b class="num">' + r.accountNo + '</b></div>' +
+      '<div class="row"><span>' + t('monthly_inst') + '</span><b class="num">' + money(r.monthly) + '</b></div>' +
+      '<a class="btn wa block" target="_blank" href="' + waLink(waNum(c.mobile), msg) + '">' + t('send_details_wa') + '</a>' +
+      '<button class="btn light block" onclick="closeModal();openCustomer(curCust.customer.id,true)">' + t('ok') + '</button>');
   }).catch(adminFail);
 }
 
-// ---------- Logins ----------
+// ---------- Logins & registrations ----------
 function loginFilter(s) {
   curLoginStatus = s;
   var b = $('loginSubtabs').querySelectorAll('button');
   for (var i = 0; i < b.length; i++) b[i].classList.toggle('active', b[i].getAttribute('data-s') === s);
   api('listLogins', [PWD, s], true).then(function (list) {
-    if (!list.length) { $('loginList').innerHTML = '<div class="card muted">کوئی ریکارڈ نہیں</div>'; return; }
+    if (!list.length) { $('loginList').innerHTML = '<div class="card muted">' + t('no_records') + '</div>'; return; }
     $('loginList').innerHTML = list.map(function (l) {
       var act = l.status === 'Pending'
-        ? '<button class="btn green sm" onclick="approveLogin(\'' + l.mobile + '\')">✅ منظور</button><button class="btn red sm" onclick="rejectLogin(\'' + l.mobile + '\')">❌ مسترد</button>' : '';
-      return '<div class="card"><div class="row"><b onclick="openCustomer(\'' + l.customerId + '\')" style="cursor:pointer">' + esc(l.customerName) + '</b>' + badge(l.status) + '</div>' +
-        '<div class="row"><span class="muted">موبائل</span><span class="num">' + esc(l.mobile) + '</span></div>' +
-        '<div class="row"><span class="muted">درخواست / شرائط قبول</span><span class="num">' + esc(l.termsAcceptedAt) + '</span></div>' +
-        (l.approvedAt ? '<div class="row"><span class="muted">منظوری</span><span class="num">' + esc(l.approvedAt) + '</span></div>' : '') +
-        (l.rejectReason ? '<div class="muted">وجہ: ' + esc(l.rejectReason) + '</div>' : '') + act + '</div>';
+        ? '<button class="btn green sm" onclick="approveLogin(\'' + l.mobile + '\')">' + t('approve') + '</button><button class="btn red sm" onclick="rejectLogin(\'' + l.mobile + '\')">' + t('btn_reject') + '</button>' : '';
+      return '<div class="card"><div class="row"><b>' + esc(l.customerName) + '</b>' + badge(l.status) + '</div>' +
+        (l.source === 'Self' ? '<span class="badge b-Pending">' + t('self_registered') + '</span>' : '') +
+        '<div class="row"><span class="muted">' + t('mobile') + '</span><span class="num">' + esc(l.mobile) + '</span></div>' +
+        '<div class="row"><span class="muted">' + t('req_terms') + '</span><span class="num">' + esc(l.termsAcceptedAt) + '</span></div>' +
+        (l.approvedAt ? '<div class="row"><span class="muted">' + t('approved_at') + '</span><span class="num">' + esc(l.approvedAt) + '</span></div>' : '') +
+        (l.rejectReason ? '<div class="muted">' + t('reason') + ': ' + esc(l.rejectReason) + '</div>' : '') +
+        '<button class="btn light sm" onclick="openCustomer(\'' + l.customerId + '\')">' + t('view_details') + '</button>' + act + '</div>';
     }).join('');
   }).catch(adminFail);
 }
 function approveLogin(m) {
-  if (!confirm('کیا اس گاہک کا لاگ ان منظور کرنا ہے؟')) return;
+  if (!confirm(t('approve_q'))) return;
   api('approveLogin', [PWD, m]).then(function (r) {
-    var msg = '*' + SHOP.shopName + '*\nالسلام علیکم ' + r.customerName + '\n✅ آپ کا لاگ ان منظور ہو گیا ہے۔ اب آپ اپنے موبائل نمبر اور PIN سے لاگ ان کر سکتے ہیں:\n' + portalUrl();
-    modal('<h3 style="color:var(--green)">✅ منظور ہو گیا</h3><a class="btn wa block" target="_blank" href="' + waLink(r.waNumber, msg) + '">📲 گاہک کو اطلاع دیں</a><button class="btn light block" onclick="closeModal()">بند کریں</button>');
-    loginFilter(curLoginStatus);
+    var msg = t('wa_approved', { shop: SHOP.shopName, name: r.customerName, url: portalUrl() });
+    modal('<h3 style="color:var(--green)">' + t('approved_ok') + '</h3><a class="btn wa block" target="_blank" href="' + waLink(r.waNumber, msg) + '">' + t('notify_customer') + '</a><button class="btn light block" onclick="closeModal();refreshPage()">' + t('close') + '</button>');
+    if (currentPage() === 'logins') loginFilter(curLoginStatus);
   }).catch(adminFail);
 }
 function rejectLogin(m) {
-  var reason = prompt('مسترد کرنے کی وجہ:', '');
+  var reason = prompt(t('reject_reason_q'), '');
   if (reason === null) return;
-  api('rejectLogin', [PWD, m, reason]).then(function () { toast('مسترد کر دیا'); loginFilter(curLoginStatus); }).catch(adminFail);
+  api('rejectLogin', [PWD, m, reason]).then(function () { toast(t('rejected_ok')); refreshPage(); }).catch(adminFail);
 }
 
 // ---------- Settings ----------
@@ -625,17 +657,19 @@ function saveSettings(what) {
   var s = {};
   if (what === 'mobile') { s.shopMobile = $('s_mobile').value.trim(); if (!s.shopMobile) return; }
   if (what === 'pwd') {
-    if ($('s_pwd1').value.length < 4) { toast('پاس ورڈ کم از کم 4 حروف کا ہو', true); return; }
-    if ($('s_pwd1').value !== $('s_pwd2').value) { toast('دونوں پاس ورڈ ایک جیسے نہیں', true); return; }
+    if ($('s_pwd1').value.length < 4) { toast(t('pwd_short'), true); return; }
+    if ($('s_pwd1').value !== $('s_pwd2').value) { toast(t('pwd_mismatch'), true); return; }
     s.newPassword = $('s_pwd1').value;
   }
   api('updateSettings', [PWD, s]).then(function () {
-    toast('محفوظ ہو گیا ✅');
+    toast(t('saved'));
     if (s.newPassword) { PWD = s.newPassword; store('mhm_admin', PWD); $('s_pwd1').value = ''; $('s_pwd2').value = ''; }
   }).catch(adminFail);
 }
 
 // ---------- Start ----------
+applyLang();
+fillItemTypes();
 (function () {
   var p = load('mhm_admin');
   if (p) { $('pwd').value = p; login(); }
