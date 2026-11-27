@@ -8,12 +8,12 @@
 <link rel="apple-touch-icon" href="logo-192.png">
 <link rel="manifest" href="manifest-admin.json">
 <title>MHM Electronics - Admin</title>
-<link rel="stylesheet" href="style.css?v=7">
-<script src="config.js?v=7"></script>
-<script src="i18n.js?v=7"></script>
+<link rel="stylesheet" href="style.css?v=8">
+<script src="config.js?v=8"></script>
+<script src="i18n.js?v=8"></script>
 <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-<script src="common.js?v=7"></script>
+<script src="common.js?v=8"></script>
 </head>
 <body class="admin">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -379,7 +379,8 @@ function payFilter(s) {
       var act = (p.proof ? '<a class="btn light sm" target="_blank" href="' + esc(p.proof) + '">' + t('view_proof') + '</a>' : '') +
         (p.status === 'Pending Shop'
           ? '<button class="btn gold sm" onclick="confirmPay(\'' + p.receiptNo + '\')">' + t('btn_received') + '</button><button class="btn red sm" onclick="rejectPay(\'' + p.receiptNo + '\')">' + t('btn_reject') + '</button>'
-          : '<button class="btn sm" onclick="showReceipt(\'' + p.receiptNo + '\')">' + t('btn_receipt') + '</button>');
+          : '<button class="btn sm" onclick="showReceipt(\'' + p.receiptNo + '\')">' + t('btn_receipt') + '</button>') +
+        '<button class="btn light sm" style="color:var(--red)" onclick="delPayment(\'' + p.receiptNo + '\',' + p.amount + ')">' + t('del_payment') + '</button>';
       return '<div class="card pay-card"><div class="pc-top"><span class="name-pill">' + esc(p.customerName) + '</span>' + badge(p.status) + '</div>' +
         '<div class="pc-amt">' + money(p.amount) + '</div>' +
         '<div class="pc-meta"><span class="num">' + esc(p.receiptNo) + ' · ' + esc(p.accountNo) + '</span> · ' + esc(p.method) + ' · ' + (p.submittedBy === 'Customer' ? t('sent_by_customer') : t('at_shop')) + '</div>' +
@@ -472,7 +473,8 @@ function openCustomer(id, noPush) {
       '<div>' + doc(c.photo, 'doc_photo') + doc(c.cnicFront, 'doc_cf') + doc(c.cnicBack, 'doc_cb') + doc(c.gCnicFront, 'doc_gcf') + doc(c.gCnicBack, 'doc_gcb') + '</div>' +
       (r.login && r.login.status === 'Pending' ? '<button class="btn green" onclick="approveLogin(\'' + r.login.mobile + '\')">' + t('approve') + '</button><button class="btn red" onclick="rejectLogin(\'' + r.login.mobile + '\')">' + t('btn_reject') + '</button><br>' : '') +
       '<button class="btn gold" onclick="openDealForm()">' + t('new_deal') + '</button><button class="btn light" onclick="openCustForm(true)">' + t('edit') + '</button>' +
-      '<a class="btn wa" target="_blank" href="' + waLink(waNum(c.mobile), t('wa_invite', { shop: SHOP.shopName, name: c.name, url: portalUrl(), mobile: c.mobile })) + '">' + t('send_app_link') + '</a></div>';
+      '<a class="btn wa" target="_blank" href="' + waLink(waNum(c.mobile), t('wa_invite', { shop: SHOP.shopName, name: c.name, url: portalUrl(), mobile: c.mobile })) + '">' + t('send_app_link') + '</a>' +
+      '<button class="btn red" onclick="delCustomer(\'' + c.id + '\')">' + t('del_customer') + '</button></div>';
     if (!r.deals.length) h += '<div class="card muted">' + t('no_deals') + '</div>';
     r.deals.forEach(function (d, i) { h += dealCard(c, d, i); });
     $('custDetail').innerHTML = h;
@@ -499,10 +501,39 @@ function dealCard(c, d, i) {
     (d.chequeNo || d.chequeAccount ? '<div class="muted">' + t('cheque_short') + ': ' + esc(d.chequeBank) + ' | ' + t('no_short') + ' <span class="num">' + esc(d.chequeNo) + '</span> | ' + t('account') + ' <span class="num">' + esc(d.chequeAccount) + '</span> | ' + esc(d.chequeHolder) + '</div>' : '') +
     '<div class="ack-box" style="margin-top:6px"><b>' + t('delivery_title') + '</b><br>' + ack + '</div>' +
     '<details style="margin-top:6px"><summary>' + t('schedule') + '</summary><div class="table-wrap"><table><tr><th>#</th><th>' + t('date') + '</th><th>' + t('inst') + '</th><th>' + t('remaining') + '</th><th></th></tr>' + sched + '</table></div></details>' +
+    '<details style="margin-top:6px"><summary>' + t('payments_list') + ' (' + d.payments.length + ')</summary>' +
+    (d.payments.length ? d.payments.map(function (p) {
+      return '<div class="row" style="align-items:center"><span><span class="num">' + esc(p.receiptNo) + '</span> ' + badge(p.status) + '<br><span class="muted num">' + esc(p.date) + '</span></span>' +
+        '<span><b class="num">' + money(p.amount) + '</b> <button class="btn light sm" style="color:var(--red)" onclick="delPayment(\'' + p.receiptNo + '\',' + p.amount + ')">' + t('del_payment') + '</button></span></div>';
+    }).join('') : '<p class="muted">' + t('no_records') + '</p>') + '</details>' +
     '<button class="btn green sm" onclick="openPayForm(\'' + d.accountNo + '\')">' + t('btn_recv_inst') + '</button>' +
     '<button class="btn light sm" onclick="printAgreement(curCust.customer, curCust.deals[' + i + '])">' + t('btn_print') + '</button>' +
     (d.chequeImage ? '<a class="btn light sm" target="_blank" href="' + esc(d.chequeImage) + '">' + t('cheque_short') + '</a>' : '') +
-    (d.deliveryPhoto ? '<a class="btn light sm" target="_blank" href="' + esc(d.deliveryPhoto) + '">' + t('btn_delivery') + '</a>' : '') + '</div>';
+    (d.deliveryPhoto ? '<a class="btn light sm" target="_blank" href="' + esc(d.deliveryPhoto) + '">' + t('btn_delivery') + '</a>' : '') +
+    '<button class="btn light sm" style="color:var(--red)" onclick="delDeal(\'' + d.accountNo + '\')">' + t('del_deal') + '</button></div>';
+}
+
+// ---------- Delete ----------
+function typedOk(what, code) {
+  var x = prompt(t('del_type_code', { what: what, code: code }), '');
+  if (x === null) return false;
+  if (x.trim().toUpperCase() !== String(code).toUpperCase()) { toast(t('del_mismatch'), true); return false; }
+  return true;
+}
+function delCustomer(id) {
+  if (!typedOk(t('del_what_customer'), id)) return;
+  api('deleteCustomer', [PWD, id]).then(function () { toast(t('deleted_ok')); curCust = null; go('custs'); }).catch(adminFail);
+}
+function delDeal(acc) {
+  if (!typedOk(t('del_what_deal'), acc)) return;
+  api('deleteDeal', [PWD, acc]).then(function () { toast(t('deleted_ok')); openCustomer(curCust.customer.id, true); }).catch(adminFail);
+}
+function delPayment(no, amount) {
+  if (!confirm(t('del_payment_q', { no: no, amount: money(amount) }))) return;
+  api('deletePayment', [PWD, no]).then(function () {
+    toast(t('deleted_ok'));
+    if (currentPage() === 'cust' && curCust) openCustomer(curCust.customer.id, true); else payFilter(curPayStatus);
+  }).catch(adminFail);
 }
 
 function shopAck(acc) {

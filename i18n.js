@@ -278,6 +278,18 @@ var I18N_RAW = {
   p_pin_mismatch: ['دونوں PIN ایک جیسے نہیں', 'PINs do not match', 'الرمزان غير متطابقين'],
   p_tick_terms: ['شرائط سے اتفاق کا خانہ ٹک کریں', 'Please tick the agreement box', 'يرجى تحديد مربع الموافقة'],
 
+  // ---------- delete ----------
+  del_customer: ['🗑️ گاہک ڈیلیٹ کریں', '🗑️ Delete customer', '🗑️ حذف العميل'],
+  del_deal: ['🗑️ سودا ڈیلیٹ', '🗑️ Delete deal', '🗑️ حذف الصفقة'],
+  del_payment: ['🗑️ ڈیلیٹ', '🗑️ Delete', '🗑️ حذف'],
+  del_type_code: ['یہ مستقل طور پر ڈیلیٹ ہو جائے گا۔\n{what}\n\nتصدیق کے لیے یہ لکھیں: {code}', 'This will be deleted permanently.\n{what}\n\nTo confirm, type: {code}', 'سيتم الحذف نهائياً.\n{what}\n\nللتأكيد اكتب: {code}'],
+  del_what_customer: ['گاہک، اس کے تمام سودے، قسطیں اور لاگ ان', 'The customer with all deals, installments and login', 'العميل مع جميع الصفقات والأقساط والدخول'],
+  del_what_deal: ['یہ سودا، اس کا شیڈول اور اس کی تمام ادائیگیاں', 'This deal, its schedule and all its payments', 'هذه الصفقة وجدولها وجميع دفعاتها'],
+  del_payment_q: ['کیا قسط کی رسید {no} ({amount}) ڈیلیٹ کرنی ہے؟ بقایا خود دوبارہ حساب ہو جائے گا۔', 'Delete payment receipt {no} ({amount})? The balance will be recalculated.', 'هل تريد حذف إيصال الدفعة {no} ({amount})؟ سيتم إعادة حساب المتبقي.'],
+  del_mismatch: ['لکھا ہوا نمبر درست نہیں، کچھ ڈیلیٹ نہیں ہوا', 'The code does not match, nothing was deleted', 'الرمز غير مطابق، لم يتم حذف شيء'],
+  deleted_ok: ['ڈیلیٹ ہو گیا ✅ (ریکارڈ شیٹ کے Deleted صفحے میں محفوظ ہے)', 'Deleted ✅ (a copy is kept in the Deleted sheet)', 'تم الحذف ✅ (نسخة محفوظة في ورقة Deleted)'],
+  payments_list: ['🧾 ادائیگیاں', '🧾 Payments', '🧾 الدفعات'],
+
   // ---------- statuses ----------
   'st_Pending Shop': ['دکاندار کی تصدیق باقی', 'Awaiting shop', 'بانتظار المحل'],
   'st_Shop Received': ['گاہک کی تصدیق باقی', 'Awaiting customer', 'بانتظار العميل'],
