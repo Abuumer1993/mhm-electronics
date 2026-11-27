@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#0a1f44">
 <link rel="icon" href="logo-192.png">
 <link rel="apple-touch-icon" href="logo-192.png">
+<link rel="manifest" href="manifest-portal.json">
 <title>MHM Electronics</title>
 <link rel="stylesheet" href="style.css?v=7">
 <script src="config.js?v=7"></script>
@@ -301,5 +302,6 @@ renderStatic();
   if (s) { var p = s.split('|'); MOB = p[0]; PIN = p[1]; $('lMobile').value = MOB; refresh(); }
 })();
 </script>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});</script>
 </body>
 </html>
